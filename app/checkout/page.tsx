@@ -1,0 +1,513 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Layout from "@/components/layout"
+import { useCart } from "@/context/cart-context"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Image from "next/image"
+import { CheckIcon, CreditCardIcon, HomeIcon, MapPinIcon } from "lucide-react"
+
+// Razorpay types
+declare global {
+  interface Window {
+    Razorpay: any
+  }
+}
+
+type Address = {
+  name: string
+  phone: string
+  addressLine1: string
+  addressLine2: string
+  city: string
+  state: string
+  pincode: string
+  type: "home" | "work" | "other"
+}
+
+const savedAddresses: Address[] = [
+  {
+    name: "John Doe",
+    phone: "9876543210",
+    addressLine1: "Room 123, Block A",
+    addressLine2: "Student Hostel",
+    city: "University City",
+    state: "State",
+    pincode: "123456",
+    type: "home",
+  },
+]
+
+export default function Checkout() {
+  const { items, subtotal, clearCart } = useCart()
+  const router = useRouter()
+  const [addressTab, setAddressTab] = useState("saved")
+  const [paymentMethod, setPaymentMethod] = useState("razorpay")
+  const [selectedAddress, setSelectedAddress] = useState<number | null>(0)
+  const [newAddress, setNewAddress] = useState<Partial<Address>>({
+    type: "home",
+  })
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [orderComplete, setOrderComplete] = useState(false)
+
+  const deliveryFee = subtotal > 0 ? 2.99 : 0
+  const total = subtotal + deliveryFee
+
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setNewAddress((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleAddressTypeChange = (value: string) => {
+    setNewAddress((prev) => ({ ...prev, type: value as "home" | "work" | "other" }))
+  }
+
+  const handlePayment = async () => {
+    if (items.length === 0) return
+
+    setIsProcessing(true)
+
+    // In a real app, you would make an API call to your backend to create an order
+    // and get the order ID from Razorpay
+
+    if (paymentMethod === "razorpay") {
+      // Load Razorpay script
+      const script = document.createElement("script")
+      script.src = "https://checkout.razorpay.com/v1/checkout.js"
+      script.async = true
+      script.onload = () => {
+        // Create a new Razorpay instance
+        const razorpay = new window.Razorpay({
+          key: "rzp_test_YOUR_KEY_ID", // Replace with your Razorpay key
+          amount: Math.round(total * 100), // Amount in smallest currency unit (paise for INR)
+          currency: "INR",
+          name: "Campus Eats",
+          description: "Food Order Payment",
+          image: "https://your-logo-url.png", // Replace with your logo
+          handler: (response: any) => {
+            // Handle successful payment
+            console.log("Payment successful:", response)
+            completeOrder()
+          },
+          prefill: {
+            name: selectedAddress !== null ? savedAddresses[selectedAddress].name : newAddress.name,
+            contact: selectedAddress !== null ? savedAddresses[selectedAddress].phone : newAddress.phone,
+          },
+          theme: {
+            color: "#3B82F6",
+          },
+        })
+
+        razorpay.open()
+      }
+
+      document.body.appendChild(script)
+    } else {
+      // Simulate payment for cash on delivery
+      setTimeout(() => {
+        completeOrder()
+      }, 2000)
+    }
+  }
+
+  const completeOrder = () => {
+    setIsProcessing(false)
+    setOrderComplete(true)
+    clearCart()
+
+    // Redirect to order confirmation after a delay
+    setTimeout(() => {
+      router.push("/orders")
+    }, 3000)
+  }
+
+  if (orderComplete) {
+    return (
+      <Layout>
+        <div className="flex flex-col items-center justify-center py-12">
+          <div className="rounded-full bg-green-100 p-4 dark:bg-green-900">
+            <CheckIcon className="h-12 w-12 text-green-600 dark:text-green-400" />
+          </div>
+          <h1 className="mt-6 text-3xl font-bold dark:text-white">Order Placed Successfully!</h1>
+          <p className="mt-2 text-center text-muted-foreground dark:text-gray-300">
+            Your order has been placed and is being processed. You will receive a confirmation shortly.
+          </p>
+          <Button className="mt-8" onClick={() => router.push("/orders")}>
+            View Your Orders
+          </Button>
+        </div>
+      </Layout>
+    )
+  }
+
+  return (
+    <Layout>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="md:col-span-2 space-y-6">
+          <Card className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <MapPinIcon className="mr-2 h-5 w-5" />
+                Delivery Address
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Tabs value={addressTab} onValueChange={setAddressTab}>
+                <TabsList className="mb-4">
+                  <TabsTrigger value="saved">Saved Addresses</TabsTrigger>
+                  <TabsTrigger value="new">Add New Address</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="saved">
+                  {savedAddresses.length > 0 ? (
+                    <div className="space-y-4">
+                      {savedAddresses.map((address, index) => (
+                        <div
+                          key={index}
+                          className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                            selectedAddress === index
+                              ? "border-primary bg-primary/5 dark:bg-primary/10"
+                              : "border-border hover:border-primary/50"
+                          }`}
+                          onClick={() => setSelectedAddress(index)}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex items-start space-x-3">
+                              <div className="mt-0.5">
+                                {address.type === "home" ? (
+                                  <HomeIcon className="h-5 w-5 text-blue-500" />
+                                ) : (
+                                  <MapPinIcon className="h-5 w-5 text-pink-500" />
+                                )}
+                              </div>
+                              <div>
+                                <div className="flex items-center">
+                                  <h3 className="font-medium dark:text-white">{address.name}</h3>
+                                  <Badge className="ml-2 capitalize">{address.type}</Badge>
+                                </div>
+                                <p className="text-sm text-muted-foreground dark:text-gray-300 mt-1">{address.phone}</p>
+                                <p className="text-sm text-muted-foreground dark:text-gray-300 mt-1">
+                                  {address.addressLine1}, {address.addressLine2}, {address.city}, {address.state} -{" "}
+                                  {address.pincode}
+                                </p>
+                              </div>
+                            </div>
+                            {selectedAddress === index && (
+                              <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
+                                <CheckIcon className="h-4 w-4 text-white" />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-muted-foreground dark:text-gray-300">
+                        You don't have any saved addresses. Add a new address to continue.
+                      </p>
+                      <Button className="mt-4" onClick={() => setAddressTab("new")}>
+                        Add New Address
+                      </Button>
+                    </div>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="new">
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Full Name</Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          value={newAddress.name || ""}
+                          onChange={handleAddressChange}
+                          placeholder="Enter your full name"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone Number</Label>
+                        <Input
+                          id="phone"
+                          name="phone"
+                          value={newAddress.phone || ""}
+                          onChange={handleAddressChange}
+                          placeholder="Enter your phone number"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="addressLine1">Address Line 1</Label>
+                      <Input
+                        id="addressLine1"
+                        name="addressLine1"
+                        value={newAddress.addressLine1 || ""}
+                        onChange={handleAddressChange}
+                        placeholder="House/Flat No., Building Name"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="addressLine2">Address Line 2</Label>
+                      <Input
+                        id="addressLine2"
+                        name="addressLine2"
+                        value={newAddress.addressLine2 || ""}
+                        onChange={handleAddressChange}
+                        placeholder="Street, Area, Landmark"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="city">City</Label>
+                        <Input
+                          id="city"
+                          name="city"
+                          value={newAddress.city || ""}
+                          onChange={handleAddressChange}
+                          placeholder="City"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="state">State</Label>
+                        <Input
+                          id="state"
+                          name="state"
+                          value={newAddress.state || ""}
+                          onChange={handleAddressChange}
+                          placeholder="State"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="pincode">Pincode</Label>
+                        <Input
+                          id="pincode"
+                          name="pincode"
+                          value={newAddress.pincode || ""}
+                          onChange={handleAddressChange}
+                          placeholder="Pincode"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Address Type</Label>
+                      <RadioGroup
+                        value={newAddress.type}
+                        onValueChange={handleAddressTypeChange}
+                        className="flex space-x-4"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="home" id="home" />
+                          <Label htmlFor="home" className="cursor-pointer">
+                            Home
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="work" id="work" />
+                          <Label htmlFor="work" className="cursor-pointer">
+                            Work
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="other" id="other" />
+                          <Label htmlFor="other" className="cursor-pointer">
+                            Other
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+
+                    <Button
+                      className="mt-2"
+                      onClick={() => {
+                        // In a real app, you would save this address to the user's profile
+                        setAddressTab("saved")
+                        setSelectedAddress(0)
+                      }}
+                    >
+                      Save & Use This Address
+                    </Button>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <CreditCardIcon className="mr-2 h-5 w-5" />
+                Payment Method
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
+                <div className="space-y-4">
+                  <div
+                    className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                      paymentMethod === "razorpay"
+                        ? "border-primary bg-primary/5 dark:bg-primary/10"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                    onClick={() => setPaymentMethod("razorpay")}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <RadioGroupItem value="razorpay" id="razorpay" />
+                        <div className="flex items-center">
+                          <Image
+                            src="https://razorpay.com/assets/razorpay-logo.svg"
+                            alt="Razorpay"
+                            width={100}
+                            height={30}
+                            className="h-8 w-auto"
+                          />
+                          <Label htmlFor="razorpay" className="ml-2 cursor-pointer">
+                            Pay with Razorpay
+                          </Label>
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Image
+                          src="https://cdn-icons-png.flaticon.com/512/196/196578.png"
+                          alt="Visa"
+                          width={32}
+                          height={32}
+                          className="h-8 w-auto"
+                        />
+                        <Image
+                          src="https://cdn-icons-png.flaticon.com/512/196/196561.png"
+                          alt="Mastercard"
+                          width={32}
+                          height={32}
+                          className="h-8 w-auto"
+                        />
+                        <Image
+                          src="https://cdn-icons-png.flaticon.com/512/196/196565.png"
+                          alt="UPI"
+                          width={32}
+                          height={32}
+                          className="h-8 w-auto"
+                        />
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground dark:text-gray-300 mt-2 pl-7">
+                      Pay securely using Credit/Debit card, Net Banking, UPI, or Wallets
+                    </p>
+                  </div>
+
+                  <div
+                    className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                      paymentMethod === "cod"
+                        ? "border-primary bg-primary/5 dark:bg-primary/10"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                    onClick={() => setPaymentMethod("cod")}
+                  >
+                    <div className="flex items-center">
+                      <RadioGroupItem value="cod" id="cod" />
+                      <Label htmlFor="cod" className="ml-3 cursor-pointer">
+                        Cash on Delivery
+                      </Label>
+                    </div>
+                    <p className="text-sm text-muted-foreground dark:text-gray-300 mt-2 pl-7">
+                      Pay with cash when your order is delivered
+                    </p>
+                  </div>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="md:col-span-1">
+          <div className="sticky top-24">
+            <Card className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
+              <CardHeader>
+                <CardTitle>Order Summary</CardTitle>
+                <CardDescription>
+                  {items.length} {items.length === 1 ? "item" : "items"} in your cart
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="max-h-64 overflow-y-auto space-y-3 pr-2">
+                    {items.map((item) => (
+                      <div key={item.id} className="flex items-center space-x-3">
+                        <div className="relative h-12 w-12 rounded-md overflow-hidden flex-shrink-0">
+                          <Image src={item.image || "/placeholder.svg"} alt={item.name} fill className="object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-medium truncate dark:text-white">{item.name}</h4>
+                          <p className="text-xs text-muted-foreground dark:text-gray-300">
+                            {item.quantity} × ${item.price.toFixed(2)}
+                          </p>
+                        </div>
+                        <div className="text-sm font-medium dark:text-white">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="border-t pt-4 space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground dark:text-gray-300">Subtotal</span>
+                      <span className="dark:text-white">${subtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground dark:text-gray-300">Delivery Fee</span>
+                      <span className="dark:text-white">${deliveryFee.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between font-medium">
+                      <span className="dark:text-white">Total</span>
+                      <span className="dark:text-white">${total.toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    disabled={
+                      items.length === 0 ||
+                      isProcessing ||
+                      (addressTab === "saved" && selectedAddress === null) ||
+                      (addressTab === "new" &&
+                        (!newAddress.name ||
+                          !newAddress.phone ||
+                          !newAddress.addressLine1 ||
+                          !newAddress.city ||
+                          !newAddress.state ||
+                          !newAddress.pincode))
+                    }
+                    onClick={handlePayment}
+                  >
+                    {isProcessing ? "Processing..." : `Pay ${total.toFixed(2)}`}
+                  </Button>
+
+                  <p className="text-xs text-center text-muted-foreground dark:text-gray-300">
+                    By placing your order, you agree to our Terms of Service and Privacy Policy
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  )
+}
+
+import { Badge } from "@/components/ui/badge"
