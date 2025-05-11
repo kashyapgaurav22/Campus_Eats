@@ -1,30 +1,31 @@
-# campus eats
+# 🍽️ Campus Eats – Food Ordering App for College Campuses
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+**Campus Eats** is a Swiggy/Zomato-inspired food ordering web app tailored for college campuses. It allows students to order food from various on-campus outlets with ease, providing a seamless and convenient user experience.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/kashyap-gaurav22s-projects/v0-campus-eats)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/3zBo2wiljyM)
+[🌐 Live Demo](https://v0-campus-eats.vercel.app/)
 
-## Overview
+---
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## 🚀 Features
 
-## Deployment
+- 🏫 Discover and order from campus food outlets
+- 📱 Responsive and clean UI/UX
+- 🛒 Add to cart and place orders in a few clicks
+- 🔍 Browse menus with detailed item listings
+- ⏱️ Real-time order updates *(coming soon)*
+- 💳 Payment integration ready *(future enhancement)*
 
-Your project is live at:
+---
 
-**[https://vercel.com/kashyap-gaurav22s-projects/v0-campus-eats](https://vercel.com/kashyap-gaurav22s-projects/v0-campus-eats)**
+## 🛠️ Tech Stack
 
-## Build your app
+- **Frontend**: React.js, Tailwind CSS   
+- **Deployment**: Vercel
 
-Continue building your app on:
+---
 
-**[https://v0.dev/chat/projects/3zBo2wiljyM](https://v0.dev/chat/projects/3zBo2wiljyM)**
+## 🎯 Purpose
 
-## How It Works
+Campus Eats was created to improve the food ordering experience for college students by digitizing and simplifying the process of accessing meals from campus outlets.
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+---
