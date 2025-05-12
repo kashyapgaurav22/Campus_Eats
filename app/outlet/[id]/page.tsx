@@ -1,5 +1,7 @@
 "use client"
 
+import { DialogTrigger } from "@/components/ui/dialog"
+
 import { useState } from "react"
 import { useParams } from "next/navigation"
 import Layout from "@/components/layout"
@@ -23,14 +25,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogDescription,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { toast } from "@/components/ui/use-toast"
@@ -419,15 +414,15 @@ export default function OutletDetail() {
                                       Nutrition Info
                                     </Button>
                                   </DialogTrigger>
-                                  <DialogContent className="sm:max-w-[600px]">
+                                  <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
                                     <DialogHeader>
                                       <DialogTitle>{item.name} - Nutrition Information</DialogTitle>
                                     </DialogHeader>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
                                       <div>
                                         <h4 className="text-sm font-medium mb-2 text-center">Nutrition Distribution</h4>
-                                        <div className="h-[200px]">
-                                          <ResponsiveContainer width="100%" height="100%">
+                                        <div className="h-[180px] px-2">
+                                          <ResponsiveContainer width="99%" height="99%">
                                             <PieChart>
                                               <Pie
                                                 data={getNutritionChartData(item.nutrition)}
@@ -450,7 +445,7 @@ export default function OutletDetail() {
                                       </div>
                                       <div>
                                         <h4 className="text-sm font-medium mb-2 text-center">Macronutrients (g)</h4>
-                                        <div className="h-[200px]">
+                                        <div className="h-[180px] px-2">
                                           <ChartContainer
                                             config={{
                                               protein: {
@@ -474,7 +469,7 @@ export default function OutletDetail() {
                                                 color: "hsl(var(--chart-5))",
                                               },
                                             }}
-                                            className="h-[200px]"
+                                            className="h-[180px]"
                                           >
                                             <ResponsiveContainer width="100%" height="100%">
                                               <BarChart data={getNutritionBarData(item.nutrition)}>
