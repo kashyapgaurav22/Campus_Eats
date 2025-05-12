@@ -23,7 +23,14 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+} from "@/components/ui/dialog"
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { toast } from "@/components/ui/use-toast"
@@ -210,6 +217,8 @@ export default function OutletDetail() {
   const [activeCategory, setActiveCategory] = useState<string>(outlet.categories[0])
   const [selectedItem, setSelectedItem] = useState<any>(null)
   const [itemQuantities, setItemQuantities] = useState<Record<string, number>>({})
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
+  const [quickViewItem, setQuickViewItem] = useState<any>(null)
 
   const filteredMenu = outlet.menu.filter((item) =>
     activeCategory === "All" ? true : item.category === activeCategory,
@@ -271,6 +280,11 @@ export default function OutletDetail() {
 
   const getItemQuantity = (itemId: string) => {
     return itemQuantities[itemId] || 1
+  }
+
+  const openQuickView = (item: any) => {
+    setQuickViewItem(item)
+    setIsQuickViewOpen(true)
   }
 
   return (
@@ -361,7 +375,10 @@ export default function OutletDetail() {
                         <CardContent className="p-0">
                           <div className="flex flex-col md:flex-row">
                             <div className="md:w-1/4 relative">
-                              <div className="aspect-square md:aspect-auto md:h-full">
+                              <div
+                                className="aspect-square md:aspect-auto md:h-full cursor-pointer"
+                                onClick={() => openQuickView(item)}
+                              >
                                 <Image
                                   src={item.image || "/placeholder.svg"}
                                   alt={item.name}
@@ -378,7 +395,12 @@ export default function OutletDetail() {
                             <div className="p-4 md:w-3/4 flex flex-col justify-between">
                               <div>
                                 <div className="flex justify-between items-start mb-2">
-                                  <h3 className="text-xl font-bold dark:text-white">{item.name}</h3>
+                                  <h3
+                                    className="text-xl font-bold dark:text-white cursor-pointer hover:underline"
+                                    onClick={() => openQuickView(item)}
+                                  >
+                                    {item.name}
+                                  </h3>
                                   <span className="font-bold dark:text-white">${item.price.toFixed(2)}</span>
                                 </div>
                                 <p className="text-muted-foreground dark:text-gray-300 mb-4">{item.description}</p>
@@ -540,6 +562,92 @@ export default function OutletDetail() {
           </Tabs>
         </CardContent>
       </Card>
+
+      {/* Quick View Dialog */}
+      <Dialog open={isQuickViewOpen} onOpenChange={setIsQuickViewOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          {quickViewItem && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{quickViewItem.name}</DialogTitle>
+                <DialogDescription>${quickViewItem.price.toFixed(2)}</DialogDescription>
+              </DialogHeader>
+              <div className="relative h-[200px] w-full rounded-md overflow-hidden my-4">
+                <Image
+                  src={quickViewItem.image || "/placeholder.svg"}
+                  alt={quickViewItem.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="space-y-4">
+                <p className="text-muted-foreground dark:text-gray-300">{quickViewItem.description}</p>
+
+                <div className="flex items-center space-x-2">
+                  {quickViewItem.isVeg && <Badge className="bg-green-500 text-white">Veg</Badge>}
+                  {quickViewItem.isSpicy && <Badge className="bg-red-500 text-white">Spicy</Badge>}
+                  {quickViewItem.isPopular && <Badge className="bg-yellow-500 text-white">Popular</Badge>}
+                </div>
+
+                <div className="flex items-center">
+                  <InfoIcon className="h-4 w-4 text-blue-500 mr-1" />
+                  <span className="text-sm text-muted-foreground dark:text-gray-300">
+                    {quickViewItem.nutrition.calories} calories
+                  </span>
+                </div>
+
+                <div className="flex items-center space-x-2 pt-4">
+                  <div className="flex items-center border rounded-md overflow-hidden">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-none"
+                      onClick={() => updateItemQuantity(quickViewItem.id, -1)}
+                    >
+                      <MinusIcon className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center">{getItemQuantity(quickViewItem.id)}</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-none"
+                      onClick={() => updateItemQuantity(quickViewItem.id, 1)}
+                    >
+                      <PlusIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <Button
+                    className="flex-1"
+                    onClick={() => {
+                      handleAddToCart(quickViewItem)
+                      setIsQuickViewOpen(false)
+                    }}
+                  >
+                    <ShoppingBagIcon className="h-4 w-4 mr-2" />
+                    Add to Cart
+                  </Button>
+                </div>
+
+                <div className="flex justify-between pt-2">
+                  <Button variant="outline" onClick={() => setIsQuickViewOpen(false)}>
+                    Close
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSelectedItem(quickViewItem)
+                      setIsQuickViewOpen(false)
+                    }}
+                  >
+                    <BarChart3Icon className="h-4 w-4 mr-2" />
+                    Nutrition Info
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </Layout>
   )
 }

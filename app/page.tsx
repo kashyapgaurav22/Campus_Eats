@@ -4,15 +4,26 @@ import { useState, useEffect } from "react"
 import Layout from "@/components/layout"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { StarIcon, MapPinIcon, ClockIcon, ExternalLinkIcon, ShoppingBagIcon } from "lucide-react"
+import {
+  StarIcon,
+  MapPinIcon,
+  ClockIcon,
+  ExternalLinkIcon,
+  ShoppingBagIcon,
+  CheckIcon,
+  PlusIcon,
+  MinusIcon,
+  Utensils,
+  Flame,
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCart } from "@/context/cart-context"
 import { toast } from "@/components/ui/use-toast"
 import { Toaster } from "@/components/ui/toaster"
-import { CheckIcon, PlusIcon, MinusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 
 const trendingFood = [
   {
@@ -24,6 +35,12 @@ const trendingFood = [
     price: 8.99,
     rating: 4.8,
     tags: ["Spicy", "Popular"],
+    description:
+      "A hearty bowl of ramen with spicy broth, tender pork, and fresh vegetables. Topped with a soft-boiled egg, green onions, and nori.",
+    calories: 520,
+    prepTime: "15 min",
+    spicyLevel: "Medium",
+    isVeg: false,
   },
   {
     id: 2,
@@ -34,6 +51,12 @@ const trendingFood = [
     price: 12.99,
     rating: 4.5,
     tags: ["Vegetarian", "New"],
+    description:
+      "Hand-tossed pizza topped with bell peppers, mushrooms, olives, onions, and fresh mozzarella cheese on our signature tomato sauce.",
+    calories: 680,
+    prepTime: "20 min",
+    spicyLevel: "Mild",
+    isVeg: true,
   },
   {
     id: 3,
@@ -44,6 +67,12 @@ const trendingFood = [
     price: 10.5,
     rating: 4.7,
     tags: ["Healthy", "Protein-Rich"],
+    description:
+      "Fresh mixed greens topped with grilled chicken breast, cherry tomatoes, cucumber, avocado, and a light lemon vinaigrette dressing.",
+    calories: 380,
+    prepTime: "10 min",
+    spicyLevel: "None",
+    isVeg: false,
   },
   {
     id: 4,
@@ -54,6 +83,12 @@ const trendingFood = [
     price: 9.99,
     rating: 4.6,
     tags: ["Bestseller", "Comfort Food"],
+    description:
+      "Juicy beef patty topped with melted cheddar cheese, lettuce, tomato, onion, and our special sauce on a toasted brioche bun.",
+    calories: 750,
+    prepTime: "12 min",
+    spicyLevel: "Mild",
+    isVeg: false,
   },
   {
     id: 5,
@@ -64,6 +99,12 @@ const trendingFood = [
     price: 6.5,
     rating: 4.9,
     tags: ["Refreshing", "Healthy"],
+    description:
+      "Blend of fresh strawberries, bananas, blueberries, and yogurt with a touch of honey for natural sweetness.",
+    calories: 280,
+    prepTime: "5 min",
+    spicyLevel: "None",
+    isVeg: true,
   },
 ]
 
@@ -141,6 +182,8 @@ export default function Home() {
   const [visibleFoods, setVisibleFoods] = useState(trendingFood.slice(0, 3))
   const { addItem } = useCart()
   const [itemQuantities, setItemQuantities] = useState<Record<string, number>>({})
+  const [selectedFood, setSelectedFood] = useState<(typeof trendingFood)[0] | null>(null)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const updateItemQuantity = (itemId: number, delta: number) => {
     setItemQuantities((prev) => {
@@ -173,6 +216,11 @@ export default function Home() {
         </div>
       ),
     })
+  }
+
+  const openFoodDetails = (food: (typeof trendingFood)[0]) => {
+    setSelectedFood(food)
+    setIsDialogOpen(true)
   }
 
   // Auto-rotate through trending foods
@@ -222,12 +270,17 @@ export default function Home() {
               className="absolute inset-0"
             >
               <div className="relative h-full">
-                <Image
-                  src={trendingFood[activeIndex].image || "/placeholder.svg"}
-                  alt={trendingFood[activeIndex].name}
-                  fill
-                  className="object-cover"
-                />
+                <div
+                  className="absolute inset-0 cursor-pointer"
+                  onClick={() => openFoodDetails(trendingFood[activeIndex])}
+                >
+                  <Image
+                    src={trendingFood[activeIndex].image || "/placeholder.svg"}
+                    alt={trendingFood[activeIndex].name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-6 text-white">
                   <motion.div
@@ -235,7 +288,12 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
                   >
-                    <h3 className="text-3xl font-bold mb-2">{trendingFood[activeIndex].name}</h3>
+                    <h3
+                      className="text-3xl font-bold mb-2 cursor-pointer hover:underline"
+                      onClick={() => openFoodDetails(trendingFood[activeIndex])}
+                    >
+                      {trendingFood[activeIndex].name}
+                    </h3>
                     <p className="text-lg mb-2">From {trendingFood[activeIndex].outlet}</p>
                     <div className="flex items-center mb-4">
                       <StarIcon className="h-5 w-5 text-yellow-400 mr-1" />
@@ -270,13 +328,15 @@ export default function Home() {
             >
               <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
                 <div className="relative">
-                  <Image
-                    src={food.image || "/placeholder.svg"}
-                    alt={food.name}
-                    width={400}
-                    height={200}
-                    className="w-full h-48 object-cover"
-                  />
+                  <div className="cursor-pointer" onClick={() => openFoodDetails(food)}>
+                    <Image
+                      src={food.image || "/placeholder.svg"}
+                      alt={food.name}
+                      width={400}
+                      height={200}
+                      className="w-full h-48 object-cover"
+                    />
+                  </div>
                   <div className="absolute top-2 right-2">
                     <Badge className="bg-white/80 dark:bg-gray-900/80 text-primary dark:text-white hover:bg-white dark:hover:bg-gray-900">
                       ${food.price.toFixed(2)}
@@ -286,7 +346,12 @@ export default function Home() {
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-semibold text-lg dark:text-white">{food.name}</h3>
+                      <h3
+                        className="font-semibold text-lg dark:text-white cursor-pointer hover:underline"
+                        onClick={() => openFoodDetails(food)}
+                      >
+                        {food.name}
+                      </h3>
                       <p className="text-sm text-muted-foreground dark:text-gray-300">{food.outlet}</p>
                     </div>
                     <div className="flex items-center">
@@ -427,6 +492,104 @@ export default function Home() {
           ))}
         </motion.div>
       </section>
+
+      {/* Food Details Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          {selectedFood && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl">{selectedFood.name}</DialogTitle>
+                <DialogDescription>
+                  From {selectedFood.outlet} • ${selectedFood.price.toFixed(2)}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="relative h-[200px] w-full rounded-md overflow-hidden my-4">
+                <Image
+                  src={selectedFood.image || "/placeholder.svg"}
+                  alt={selectedFood.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="space-y-4">
+                <p className="text-muted-foreground dark:text-gray-300">{selectedFood.description}</p>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <Badge
+                      variant={selectedFood.isVeg ? "success" : "secondary"}
+                      className={selectedFood.isVeg ? "bg-green-500" : ""}
+                    >
+                      {selectedFood.isVeg ? "Vegetarian" : "Non-Vegetarian"}
+                    </Badge>
+                    <div className="flex items-center">
+                      <StarIcon className="h-4 w-4 text-yellow-400 mr-1" />
+                      <span>{selectedFood.rating}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="flex items-center">
+                    <ClockIcon className="h-4 w-4 mr-2 text-muted-foreground dark:text-gray-400" />
+                    <span className="text-sm dark:text-gray-300">{selectedFood.prepTime}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Utensils className="h-4 w-4 mr-2 text-muted-foreground dark:text-gray-400" />
+                    <span className="text-sm dark:text-gray-300">{selectedFood.calories} cal</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Flame className="h-4 w-4 mr-2 text-red-500" />
+                    <span className="text-sm dark:text-gray-300">{selectedFood.spicyLevel}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2 pt-4">
+                  <div className="flex items-center border rounded-md overflow-hidden">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-none"
+                      onClick={() => updateItemQuantity(selectedFood.id, -1)}
+                    >
+                      <MinusIcon className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center">{getItemQuantity(selectedFood.id)}</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-none"
+                      onClick={() => updateItemQuantity(selectedFood.id, 1)}
+                    >
+                      <PlusIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <Button
+                    className="flex-1"
+                    onClick={() => {
+                      handleAddToCart(selectedFood)
+                      setIsDialogOpen(false)
+                    }}
+                  >
+                    <ShoppingBagIcon className="h-4 w-4 mr-2" />
+                    Add to Cart
+                  </Button>
+                </div>
+
+                <div className="flex justify-between pt-2">
+                  <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                    Close
+                  </Button>
+                  <Link href={`/food/${selectedFood.id}`}>
+                    <Button variant="outline">View Details</Button>
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </Layout>
   )
 }
