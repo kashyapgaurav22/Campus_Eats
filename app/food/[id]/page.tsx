@@ -5,9 +5,12 @@ import Layout from "@/components/layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { StarIcon, Clock, Utensils, Flame } from "lucide-react"
+import { StarIcon, Clock, Utensils, Flame, CheckIcon } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import { useCart } from "@/context/cart-context"
+import { toast } from "@/components/ui/use-toast"
+import { Toaster } from "@/components/ui/toaster"
 
 // This would typically come from an API or database
 const foodItem = {
@@ -54,9 +57,32 @@ const reviews = [
 export default function FoodDetail() {
   const [quantity, setQuantity] = useState(1)
   const [activeImage, setActiveImage] = useState(0)
+  const { addItem } = useCart()
+
+  const handleAddToCart = () => {
+    addItem({
+      id: foodItem.id.toString(),
+      name: foodItem.name,
+      price: foodItem.price,
+      image: foodItem.image,
+      outletId: "1", // Assuming this is from Noodle House
+      outletName: foodItem.outlet,
+    })
+
+    toast({
+      title: "Added to cart",
+      description: `${foodItem.name} has been added to your cart.`,
+      action: (
+        <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
+          <CheckIcon className="h-5 w-5 text-white" />
+        </div>
+      ),
+    })
+  }
 
   return (
     <Layout>
+      <Toaster />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Card className="mb-8 bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
           <CardContent className="p-6">
@@ -196,7 +222,9 @@ export default function FoodDetail() {
                   <Button variant="outline" onClick={() => setQuantity(quantity + 1)}>
                     +
                   </Button>
-                  <Button className="flex-1">Add to Cart</Button>
+                  <Button className="flex-1" onClick={handleAddToCart}>
+                    Add to Cart
+                  </Button>
                 </motion.div>
               </div>
             </div>

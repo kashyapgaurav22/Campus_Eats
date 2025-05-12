@@ -4,10 +4,15 @@ import { useState, useEffect } from "react"
 import Layout from "@/components/layout"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { StarIcon, MapPinIcon, ClockIcon, ExternalLinkIcon, ChevronRightIcon } from "lucide-react"
+import { StarIcon, MapPinIcon, ClockIcon, ExternalLinkIcon, ShoppingBagIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import { useCart } from "@/context/cart-context"
+import { toast } from "@/components/ui/use-toast"
+import { Toaster } from "@/components/ui/toaster"
+import { CheckIcon, PlusIcon, MinusIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const trendingFood = [
   {
@@ -134,6 +139,41 @@ const itemVariants = {
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [visibleFoods, setVisibleFoods] = useState(trendingFood.slice(0, 3))
+  const { addItem } = useCart()
+  const [itemQuantities, setItemQuantities] = useState<Record<string, number>>({})
+
+  const updateItemQuantity = (itemId: number, delta: number) => {
+    setItemQuantities((prev) => {
+      const currentQuantity = prev[itemId] || 1
+      const newQuantity = Math.max(1, currentQuantity + delta)
+      return { ...prev, [itemId]: newQuantity }
+    })
+  }
+
+  const getItemQuantity = (itemId: number) => {
+    return itemQuantities[itemId] || 1
+  }
+
+  const handleAddToCart = (food: any) => {
+    addItem({
+      id: food.id.toString(),
+      name: food.name,
+      price: food.price,
+      image: food.image,
+      outletId: food.outletId,
+      outletName: food.outlet,
+    })
+
+    toast({
+      title: "Added to cart",
+      description: `${food.name} has been added to your cart.`,
+      action: (
+        <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
+          <CheckIcon className="h-5 w-5 text-white" />
+        </div>
+      ),
+    })
+  }
 
   // Auto-rotate through trending foods
   useEffect(() => {
@@ -145,6 +185,7 @@ export default function Home() {
 
   return (
     <Layout>
+      <Toaster />
       <section className="mb-12">
         <div className="flex justify-between items-center mb-6">
           <motion.h2
@@ -260,16 +301,36 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                  <Link href={`/food/${food.id}`}>
+                  <div className="mt-4 flex items-center space-x-2">
+                    <div className="flex items-center border rounded-md overflow-hidden">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 rounded-none"
+                        onClick={() => updateItemQuantity(food.id, -1)}
+                      >
+                        <MinusIcon className="h-4 w-4" />
+                      </Button>
+                      <span className="w-8 text-center">{getItemQuantity(food.id)}</span>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 rounded-none"
+                        onClick={() => updateItemQuantity(food.id, 1)}
+                      >
+                        <PlusIcon className="h-4 w-4" />
+                      </Button>
+                    </div>
                     <motion.button
-                      className="mt-4 w-full flex items-center justify-center p-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+                      className="flex-1 flex items-center justify-center p-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
+                      onClick={() => handleAddToCart(food)}
                     >
-                      <span className="mr-1">Order Now</span>
-                      <ChevronRightIcon className="h-4 w-4" />
+                      <ShoppingBagIcon className="h-4 w-4 mr-2" />
+                      <span>Add to Cart</span>
                     </motion.button>
-                  </Link>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>

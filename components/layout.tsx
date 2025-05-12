@@ -14,8 +14,23 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [isVegMode, setIsVegMode] = useState(false)
   const pathname = usePathname()
 
-  // Apply dark mode class to document
+  // Load dark mode preference from localStorage on initial render
   useEffect(() => {
+    const savedDarkMode = localStorage.getItem("darkMode")
+    if (savedDarkMode !== null) {
+      const isDark = JSON.parse(savedDarkMode)
+      setIsDarkMode(isDark)
+      if (isDark) {
+        document.documentElement.classList.add("dark")
+      } else {
+        document.documentElement.classList.remove("dark")
+      }
+    }
+  }, [])
+
+  // Save dark mode preference to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(isDarkMode))
     if (isDarkMode) {
       document.documentElement.classList.add("dark")
     } else {
