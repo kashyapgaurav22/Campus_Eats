@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Image from "next/image"
-import { CheckIcon, CreditCardIcon, HomeIcon, MapPinIcon } from "lucide-react"
+import { CheckIcon, CreditCardIcon, HomeIcon, MapPinIcon, Loader2Icon } from "lucide-react"
 
 // Razorpay types
 declare global {
@@ -57,6 +57,7 @@ export default function Checkout() {
   })
   const [isProcessing, setIsProcessing] = useState(false)
   const [orderComplete, setOrderComplete] = useState(false)
+  const [orderId, setOrderId] = useState<string | null>(null)
 
   const deliveryFee = subtotal > 0 ? 2.99 : 0
   const total = subtotal + deliveryFee
@@ -75,57 +76,97 @@ export default function Checkout() {
 
     setIsProcessing(true)
 
-    // In a real app, you would make an API call to your backend to create an order
-    // and get the order ID from Razorpay
+    try {
+      // In a real app, you would make an API call to your backend to create an order
+      // and get the order ID from Razorpay
 
-    if (paymentMethod === "razorpay") {
-      // Load Razorpay script
-      const script = document.createElement("script")
-      script.src = "https://checkout.razorpay.com/v1/checkout.js"
-      script.async = true
-      script.onload = () => {
-        // Create a new Razorpay instance
-        const razorpay = new window.Razorpay({
-          key: "rzp_test_YOUR_KEY_ID", // Replace with your Razorpay key
-          amount: Math.round(total * 100), // Amount in smallest currency unit (paise for INR)
-          currency: "INR",
-          name: "Campus Eats",
-          description: "Food Order Payment",
-          image: "https://your-logo-url.png", // Replace with your logo
-          handler: (response: any) => {
-            // Handle successful payment
-            console.log("Payment successful:", response)
-            completeOrder()
-          },
-          prefill: {
-            name: selectedAddress !== null ? savedAddresses[selectedAddress].name : newAddress.name,
-            contact: selectedAddress !== null ? savedAddresses[selectedAddress].phone : newAddress.phone,
-          },
-          theme: {
-            color: "#3B82F6",
-          },
-        })
+      // Simulate API call to create order
+      await new Promise((resolve) => setTimeout(resolve, 1500))
 
-        razorpay.open()
+      // Generate a random order ID
+      const generatedOrderId = `ORDER_${Math.floor(Math.random() * 1000000)}`
+      setOrderId(generatedOrderId)
+
+      if (paymentMethod === "razorpay") {
+        // Load Razorpay script
+        const script = document.createElement("script")
+        script.src = "https://checkout.razorpay.com/v1/checkout.js"
+        script.async = true
+        script.onload = () => {
+          // Create a new Razorpay instance
+          const razorpay = new window.Razorpay({
+            key: "rzp_test_YOUR_KEY_ID", // Replace with your Razorpay key
+            amount: Math.round(total * 100), // Amount in smallest currency unit (paise for INR)
+            currency: "INR",
+            name: "Campus Eats",
+            description: "Food Order Payment",
+            order_id: generatedOrderId, // This would come from your backend in a real app
+            image: "https://your-logo-url.png", // Replace with your logo
+            handler: (response: any) => {
+              // Handle successful payment
+              console.log("Payment successful:", response)
+              completeOrder(generatedOrderId)
+            },
+            prefill: {
+              name: selectedAddress !== null ? savedAddresses[selectedAddress].name : newAddress.name,
+              contact: selectedAddress !== null ? savedAddresses[selectedAddress].phone : newAddress.phone,
+            },
+            theme: {
+              color: "#3B82F6",
+            },
+            modal: {
+              ondismiss: () => {
+                setIsProcessing(false)
+              },
+            },
+          })
+
+          razorpay.open()
+        }
+
+        document.body.appendChild(script)
+      } else {
+        // Simulate payment for cash on delivery
+        setTimeout(() => {
+          completeOrder(generatedOrderId)
+        }, 2000)
       }
-
-      document.body.appendChild(script)
-    } else {
-      // Simulate payment for cash on delivery
-      setTimeout(() => {
-        completeOrder()
-      }, 2000)
+    } catch (error) {
+      console.error("Payment error:", error)
+      setIsProcessing(false)
     }
   }
 
-  const completeOrder = () => {
+  const completeOrder = (orderId: string) => {
     setIsProcessing(false)
     setOrderComplete(true)
+
+    // Save order details to localStorage for tracking
+    const orderDetails = {
+      id: orderId,
+      items: items,
+      total: total,
+      address: selectedAddress !== null ? savedAddresses[selectedAddress] : newAddress,
+      paymentMethod: paymentMethod,
+      status: "confirmed",
+      timestamp: new Date().toISOString(),
+      estimatedDelivery: new Date(Date.now() + 30 * 60000).toISOString(), // 30 minutes from now
+      deliveryPerson: {
+        name: "Alex Johnson",
+        phone: "9876543210",
+        rating: 4.8,
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+      },
+    }
+
+    const existingOrders = JSON.parse(localStorage.getItem("orders") || "[]")
+    localStorage.setItem("orders", JSON.stringify([orderDetails, ...existingOrders]))
+
     clearCart()
 
-    // Redirect to order confirmation after a delay
+    // Redirect to order tracking after a delay
     setTimeout(() => {
-      router.push("/orders")
+      router.push(`/order-tracking/${orderId}`)
     }, 3000)
   }
 
@@ -140,8 +181,12 @@ export default function Checkout() {
           <p className="mt-2 text-center text-muted-foreground dark:text-gray-300">
             Your order has been placed and is being processed. You will receive a confirmation shortly.
           </p>
-          <Button className="mt-8" onClick={() => router.push("/orders")}>
-            View Your Orders
+          <div className="mt-4 text-center">
+            <p className="text-lg font-medium dark:text-white">Order ID: {orderId}</p>
+            <p className="text-muted-foreground dark:text-gray-300">You can track your order status in real-time</p>
+          </div>
+          <Button className="mt-8" onClick={() => router.push(`/order-tracking/${orderId}`)}>
+            Track Your Order
           </Button>
         </div>
       </Layout>
@@ -494,7 +539,14 @@ export default function Checkout() {
                     }
                     onClick={handlePayment}
                   >
-                    {isProcessing ? "Processing..." : `Pay ${total.toFixed(2)}`}
+                    {isProcessing ? (
+                      <>
+                        <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      `Pay ${total.toFixed(2)}`
+                    )}
                   </Button>
 
                   <p className="text-xs text-center text-muted-foreground dark:text-gray-300">
