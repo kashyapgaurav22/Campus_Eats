@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ClockIcon, TruckIcon, ExternalLinkIcon } from "lucide-react"
+import { ClockIcon, TruckIcon, ExternalLinkIcon, CalendarIcon } from "lucide-react"
 
 type Order = {
   id: string
@@ -18,6 +18,11 @@ type Order = {
   date?: string
   timestamp: string
   estimatedDelivery?: string
+  scheduledDelivery?: {
+    timeSlot: string
+    startTime: string
+    endTime: string
+  } | null
 }
 
 const orderVariants = {
@@ -69,6 +74,11 @@ export default function Orders() {
           status: "on_the_way",
           timestamp: new Date().toISOString(),
           estimatedDelivery: new Date(Date.now() + 15 * 60000).toISOString(),
+          scheduledDelivery: {
+            timeSlot: "6:30 PM - 7:00 PM",
+            startTime: new Date(Date.now() + 3 * 60 * 60000).toISOString(),
+            endTime: new Date(Date.now() + 3.5 * 60 * 60000).toISOString(),
+          },
         },
       ]
 
@@ -208,11 +218,18 @@ export default function Orders() {
                               </span>
                             </div>
 
-                            {order.estimatedDelivery && (
-                              <div className="flex items-center text-sm text-muted-foreground">
-                                <TruckIcon className="h-4 w-4 mr-1" />
-                                <span>Estimated delivery: {formatTime(order.estimatedDelivery)}</span>
+                            {order.scheduledDelivery ? (
+                              <div className="flex items-center text-sm text-primary font-medium">
+                                <CalendarIcon className="h-4 w-4 mr-1" />
+                                <span>Scheduled: {order.scheduledDelivery.timeSlot}</span>
                               </div>
+                            ) : (
+                              order.estimatedDelivery && (
+                                <div className="flex items-center text-sm text-muted-foreground">
+                                  <TruckIcon className="h-4 w-4 mr-1" />
+                                  <span>Estimated delivery: {formatTime(order.estimatedDelivery)}</span>
+                                </div>
+                              )
                             )}
                           </div>
 

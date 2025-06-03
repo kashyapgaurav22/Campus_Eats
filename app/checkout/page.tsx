@@ -12,8 +12,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { TimeSlotSelector } from "@/components/time-slot-selector"
 import Image from "next/image"
-import { CheckIcon, CreditCardIcon, HomeIcon, MapPinIcon, Loader2Icon } from "lucide-react"
+import { CheckIcon, CreditCardIcon, HomeIcon, MapPinIcon, Loader2Icon, ClockIcon } from "lucide-react"
 // Import the PaymentDebug component
 import { PaymentDebug } from "@/components/payment-debug"
 
@@ -33,6 +34,14 @@ type Address = {
   state: string
   pincode: string
   type: "home" | "work" | "other"
+}
+
+type TimeSlot = {
+  id: string
+  startTime: Date
+  endTime: Date
+  label: string
+  available: boolean
 }
 
 const savedAddresses: Address[] = [
@@ -60,6 +69,8 @@ export default function Checkout() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [orderComplete, setOrderComplete] = useState(false)
   const [orderId, setOrderId] = useState<string | null>(null)
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null)
+  const [deliveryOption, setDeliveryOption] = useState<"asap" | "scheduled">("asap")
 
   const deliveryFee = subtotal > 0 ? 2.99 : 0
   const total = subtotal + deliveryFee
@@ -75,6 +86,10 @@ export default function Checkout() {
 
   const handlePayment = async () => {
     if (items.length === 0) return
+    if (deliveryOption === "scheduled" && !selectedTimeSlot) {
+      alert("Please select a delivery time slot")
+      return
+    }
 
     setIsProcessing(true)
 
@@ -186,6 +201,15 @@ export default function Checkout() {
     setIsProcessing(false)
     setOrderComplete(true)
 
+    // Calculate estimated delivery time based on selected time slot or ASAP
+    let estimatedDelivery: Date
+    if (deliveryOption === "scheduled" && selectedTimeSlot) {
+      estimatedDelivery = new Date(selectedTimeSlot.startTime)
+    } else {
+      // Default: 30 minutes from now for ASAP delivery
+      estimatedDelivery = new Date(Date.now() + 30 * 60000)
+    }
+
     // Save order details to localStorage for tracking
     const orderDetails = {
       id: orderId,
@@ -195,7 +219,15 @@ export default function Checkout() {
       paymentMethod: paymentMethod,
       status: "confirmed",
       timestamp: new Date().toISOString(),
-      estimatedDelivery: new Date(Date.now() + 30 * 60000).toISOString(), // 30 minutes from now
+      estimatedDelivery: estimatedDelivery.toISOString(),
+      scheduledDelivery:
+        deliveryOption === "scheduled" && selectedTimeSlot
+          ? {
+              timeSlot: selectedTimeSlot.label,
+              startTime: selectedTimeSlot.startTime.toISOString(),
+              endTime: selectedTimeSlot.endTime.toISOString(),
+            }
+          : null,
       deliveryPerson: {
         name: "Alex Johnson",
         phone: "9876543210",
@@ -229,6 +261,9 @@ export default function Checkout() {
           <div className="mt-4 text-center">
             <p className="text-lg font-medium dark:text-white">Order ID: {orderId}</p>
             <p className="text-muted-foreground dark:text-gray-300">You can track your order status in real-time</p>
+            {deliveryOption === "scheduled" && selectedTimeSlot && (
+              <p className="mt-2 text-sm font-medium dark:text-white">Scheduled delivery: {selectedTimeSlot.label}</p>
+            )}
           </div>
           <Button className="mt-8" onClick={() => router.push(`/order-tracking/${orderId}`)}>
             Track Your Order
@@ -435,6 +470,68 @@ export default function Checkout() {
             </CardContent>
           </Card>
 
+          {/* Delivery Time Selection */}
+          <Card className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <ClockIcon className="mr-2 h-5 w-5" />
+                Delivery Time
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={deliveryOption}
+                onValueChange={(value) => setDeliveryOption(value as "asap" | "scheduled")}
+              >
+                <div className="space-y-4">
+                  <div
+                    className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                      deliveryOption === "asap"
+                        ? "border-primary bg-primary/5 dark:bg-primary/10"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                    onClick={() => setDeliveryOption("asap")}
+                  >
+                    <div className="flex items-center">
+                      <RadioGroupItem value="asap" id="asap" />
+                      <Label htmlFor="asap" className="ml-3 cursor-pointer font-medium">
+                        Deliver ASAP (30-45 minutes)
+                      </Label>
+                    </div>
+                    <p className="text-sm text-muted-foreground dark:text-gray-300 mt-2 pl-7">
+                      Get your order as soon as possible
+                    </p>
+                  </div>
+
+                  <div
+                    className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                      deliveryOption === "scheduled"
+                        ? "border-primary bg-primary/5 dark:bg-primary/10"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                    onClick={() => setDeliveryOption("scheduled")}
+                  >
+                    <div className="flex items-center">
+                      <RadioGroupItem value="scheduled" id="scheduled" />
+                      <Label htmlFor="scheduled" className="ml-3 cursor-pointer font-medium">
+                        Schedule for Later
+                      </Label>
+                    </div>
+                    <p className="text-sm text-muted-foreground dark:text-gray-300 mt-2 pl-7">
+                      Choose a specific time slot for delivery
+                    </p>
+
+                    {deliveryOption === "scheduled" && (
+                      <div className="mt-4 pl-7">
+                        <TimeSlotSelector onSelectTimeSlot={setSelectedTimeSlot} selectedTimeSlot={selectedTimeSlot} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
           <Card className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
             <CardHeader>
               <CardTitle className="flex items-center">
@@ -580,7 +677,8 @@ export default function Checkout() {
                           !newAddress.addressLine1 ||
                           !newAddress.city ||
                           !newAddress.state ||
-                          !newAddress.pincode))
+                          !newAddress.pincode)) ||
+                      (deliveryOption === "scheduled" && !selectedTimeSlot)
                     }
                     onClick={handlePayment}
                   >

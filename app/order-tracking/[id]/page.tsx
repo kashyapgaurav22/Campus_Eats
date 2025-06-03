@@ -21,10 +21,12 @@ import {
   StarIcon,
   TruckIcon,
   UserIcon,
+  CalendarIcon,
 } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
+import { format } from "date-fns"
 
 // Order status types
 type OrderStatus = "confirmed" | "preparing" | "ready" | "picked_up" | "on_the_way" | "delivered"
@@ -39,6 +41,11 @@ type OrderDetails = {
   status: OrderStatus
   timestamp: string
   estimatedDelivery: string
+  scheduledDelivery?: {
+    timeSlot: string
+    startTime: string
+    endTime: string
+  } | null
   deliveryPerson?: {
     name: string
     phone: string
@@ -191,8 +198,17 @@ export default function OrderTracking() {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   }
 
+  // Format date for scheduled delivery
+  const formatScheduledDate = (isoString: string) => {
+    const date = new Date(isoString)
+    return format(date, "EEEE, MMMM d")
+  }
+
   // Get current status step
   const currentStep = statusSteps.findIndex((step) => step.status === currentStatus)
+
+  // Check if this is a scheduled delivery
+  const isScheduledDelivery = order.scheduledDelivery !== null && order.scheduledDelivery !== undefined
 
   return (
     <Layout>
@@ -298,15 +314,35 @@ export default function OrderTracking() {
                   <div className="flex items-start space-x-3">
                     <ClockIcon className="h-5 w-5 text-muted-foreground mt-0.5" />
                     <div>
-                      <p className="font-medium dark:text-white">Estimated Delivery Time</p>
-                      <p className="text-sm text-muted-foreground dark:text-gray-300">
-                        {formatEstimatedTime(order.estimatedDelivery)}
-                        {remainingTime !== null && remainingTime > 0 && (
-                          <span className="ml-2">
-                            (in approximately {remainingTime} {remainingTime === 1 ? "minute" : "minutes"})
-                          </span>
-                        )}
+                      <p className="font-medium dark:text-white">
+                        {isScheduledDelivery ? "Scheduled Delivery" : "Estimated Delivery Time"}
                       </p>
+                      {isScheduledDelivery ? (
+                        <div>
+                          <p className="text-sm text-muted-foreground dark:text-gray-300">
+                            <span className="font-medium text-primary">
+                              {formatScheduledDate(order.scheduledDelivery!.startTime)}
+                            </span>
+                            <span className="mx-1">at</span>
+                            <span className="font-medium text-primary">{order.scheduledDelivery!.timeSlot}</span>
+                          </p>
+                          {currentStatus !== "delivered" && (
+                            <Badge variant="outline" className="mt-1">
+                              <CalendarIcon className="h-3 w-3 mr-1" />
+                              Scheduled Delivery
+                            </Badge>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-muted-foreground dark:text-gray-300">
+                          {formatEstimatedTime(order.estimatedDelivery)}
+                          {remainingTime !== null && remainingTime > 0 && (
+                            <span className="ml-2">
+                              (in approximately {remainingTime} {remainingTime === 1 ? "minute" : "minutes"})
+                            </span>
+                          )}
+                        </p>
+                      )}
                     </div>
                   </div>
 
