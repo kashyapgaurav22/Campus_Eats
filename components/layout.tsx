@@ -56,6 +56,11 @@ export default function Layout({ children }: { children: ReactNode }) {
           <div className="flex items-center space-x-4">
             <Switch checked={isVegMode} onCheckedChange={setIsVegMode} className="data-[state=checked]:bg-green-500" />
             <span className="text-sm dark:text-white">{isVegMode ? "Veg Only" : "All Food"}</span>
+            <Link href="/support">
+              <Button variant="ghost" size="sm" className="dark:text-white">
+                Support
+              </Button>
+            </Link>
             <Button variant="ghost" size="icon" onClick={() => setIsDarkMode(!isDarkMode)} className="dark:text-white">
               {isDarkMode ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
             </Button>

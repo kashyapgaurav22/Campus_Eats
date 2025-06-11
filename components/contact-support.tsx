@@ -201,6 +201,22 @@ export default function ContactSupport() {
   const [faxMessage, setFaxMessage] = useState("")
   const [submissionSuccess, setSubmissionSuccess] = useState(false)
 
+  // Add these state variables at the top of the component
+  const [emailForm, setEmailForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    orderId: "",
+    message: "",
+    attachment: null as File | null,
+  })
+  const [phoneForm, setPhoneForm] = useState({
+    callbackNumber: "",
+    issueType: "",
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
   // Filter FAQs based on search query and category
   const filteredFaqs = faqs.filter((faq) => {
     const matchesSearch =
@@ -255,6 +271,47 @@ export default function ContactSupport() {
         setFaxMessage("")
       }, 3000)
     }, 1500)
+  }
+
+  // Add form handlers
+  const handleEmailFormChange = (field: string, value: string | File | null) => {
+    setEmailForm((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
+    setSubmitSuccess(true)
+    setIsSubmitting(false)
+
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setSubmitSuccess(false)
+      setEmailForm({
+        name: "",
+        email: "",
+        subject: "",
+        orderId: "",
+        message: "",
+        attachment: null,
+      })
+    }, 3000)
+  }
+
+  const handleCallbackRequest = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
+    alert(`Callback requested for ${phoneForm.callbackNumber}. You will receive a call within 15 minutes.`)
+    setIsSubmitting(false)
+    setPhoneForm({ callbackNumber: "", issueType: "" })
   }
 
   return (
@@ -317,45 +374,97 @@ export default function ContactSupport() {
                   </RadioGroup>
 
                   {contactMethod === "email" && (
-                    <form className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="name">Your Name</Label>
-                          <Input id="name" placeholder="Enter your name" />
+                    <div>
+                      {submitSuccess ? (
+                        <div className="bg-green-50 dark:bg-green-950 p-6 rounded-lg text-center">
+                          <CheckCircleIcon className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                          <h3 className="text-xl font-medium mb-2">Message Sent Successfully</h3>
+                          <p className="text-muted-foreground">
+                            We've received your message and will respond within 24 hours.
+                          </p>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="email">Email Address</Label>
-                          <Input id="email" type="email" placeholder="Enter your email" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="subject">Subject</Label>
-                        <Input id="subject" placeholder="What is your inquiry about?" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="order-id">Order ID (if applicable)</Label>
-                        <Input id="order-id" placeholder="e.g., ORDER_123456" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="message">Message</Label>
-                        <Textarea
-                          id="message"
-                          placeholder="Please describe your issue or question in detail"
-                          rows={5}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="attachment">Attachments (optional)</Label>
-                        <Input id="attachment" type="file" />
-                        <p className="text-xs text-muted-foreground mt-1">
-                          You can attach screenshots or documents related to your inquiry (max 5MB)
-                        </p>
-                      </div>
-                      <Button type="submit" className="w-full">
-                        <SendIcon className="h-4 w-4 mr-2" />
-                        Send Message
-                      </Button>
-                    </form>
+                      ) : (
+                        <form onSubmit={handleEmailSubmit} className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="name">Your Name</Label>
+                              <Input
+                                id="name"
+                                placeholder="Enter your name"
+                                value={emailForm.name}
+                                onChange={(e) => handleEmailFormChange("name", e.target.value)}
+                                required
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="email">Email Address</Label>
+                              <Input
+                                id="email"
+                                type="email"
+                                placeholder="Enter your email"
+                                value={emailForm.email}
+                                onChange={(e) => handleEmailFormChange("email", e.target.value)}
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="subject">Subject</Label>
+                            <Input
+                              id="subject"
+                              placeholder="What is your inquiry about?"
+                              value={emailForm.subject}
+                              onChange={(e) => handleEmailFormChange("subject", e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="order-id">Order ID (if applicable)</Label>
+                            <Input
+                              id="order-id"
+                              placeholder="e.g., ORDER_123456"
+                              value={emailForm.orderId}
+                              onChange={(e) => handleEmailFormChange("orderId", e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="message">Message</Label>
+                            <Textarea
+                              id="message"
+                              placeholder="Please describe your issue or question in detail"
+                              rows={5}
+                              value={emailForm.message}
+                              onChange={(e) => handleEmailFormChange("message", e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="attachment">Attachments (optional)</Label>
+                            <Input
+                              id="attachment"
+                              type="file"
+                              onChange={(e) => handleEmailFormChange("attachment", e.target.files?.[0] || null)}
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">
+                              You can attach screenshots or documents related to your inquiry (max 5MB)
+                            </p>
+                          </div>
+                          <Button type="submit" className="w-full" disabled={isSubmitting}>
+                            {isSubmitting ? (
+                              <>
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                                Sending...
+                              </>
+                            ) : (
+                              <>
+                                <SendIcon className="h-4 w-4 mr-2" />
+                                Send Message
+                              </>
+                            )}
+                          </Button>
+                        </form>
+                      )}
+                    </div>
                   )}
 
                   {contactMethod === "phone" && (
@@ -397,13 +506,47 @@ export default function ContactSupport() {
                         <p className="text-sm mb-4">
                           Don't want to wait on hold? We can call you back when a representative is available.
                         </p>
-                        <div className="space-y-4">
+                        <form onSubmit={handleCallbackRequest} className="space-y-4">
                           <div className="space-y-2">
                             <Label htmlFor="callback-number">Your Phone Number</Label>
-                            <Input id="callback-number" placeholder="Enter your phone number" />
+                            <Input
+                              id="callback-number"
+                              placeholder="Enter your phone number"
+                              value={phoneForm.callbackNumber}
+                              onChange={(e) => setPhoneForm((prev) => ({ ...prev, callbackNumber: e.target.value }))}
+                              required
+                            />
                           </div>
-                          <Button className="w-full">Request Callback</Button>
-                        </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="callback-issue">Issue Type</Label>
+                            <Select
+                              value={phoneForm.issueType}
+                              onValueChange={(value) => setPhoneForm((prev) => ({ ...prev, issueType: value }))}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Choose an issue type" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="current-order">Issue with current order</SelectItem>
+                                <SelectItem value="past-order">Issue with past order</SelectItem>
+                                <SelectItem value="account">Account or payment problem</SelectItem>
+                                <SelectItem value="technical">App or website technical issue</SelectItem>
+                                <SelectItem value="feedback">General feedback</SelectItem>
+                                <SelectItem value="other">Other inquiry</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <Button type="submit" className="w-full" disabled={isSubmitting}>
+                            {isSubmitting ? (
+                              <>
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                                Requesting...
+                              </>
+                            ) : (
+                              "Request Callback"
+                            )}
+                          </Button>
+                        </form>
                       </div>
                     </div>
                   )}
