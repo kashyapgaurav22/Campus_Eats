@@ -17,44 +17,46 @@ import {
   UsersIcon,
   CheckCircleIcon,
   ArrowRightIcon,
-  PlayIcon,
   DownloadIcon,
   AppleIcon,
   SmartphoneIcon,
+  BookOpenIcon,
+  HomeIcon,
+  BuildingIcon,
 } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 
 const features = [
   {
-    icon: <ClockIcon className="h-8 w-8 text-blue-500" />,
+    icon: <ClockIcon className="h-8 w-8 text-orange-500" />,
     title: "Fast Delivery",
     description: "Get your favorite meals delivered in 30 minutes or less, right to your dorm or campus location.",
   },
   {
-    icon: <MapPinIcon className="h-8 w-8 text-green-500" />,
+    icon: <MapPinIcon className="h-8 w-8 text-purple-500" />,
     title: "Campus-Focused",
     description:
       "Designed specifically for university life with campus-specific delivery zones and student-friendly features.",
   },
   {
-    icon: <CreditCardIcon className="h-8 w-8 text-purple-500" />,
+    icon: <CreditCardIcon className="h-8 w-8 text-orange-600" />,
     title: "Student-Friendly Pricing",
     description: "Affordable delivery fees and exclusive student discounts to fit your budget.",
   },
   {
-    icon: <ShieldCheckIcon className="h-8 w-8 text-orange-500" />,
+    icon: <ShieldCheckIcon className="h-8 w-8 text-purple-600" />,
     title: "Safe & Reliable",
     description: "Verified delivery partners and real-time tracking for peace of mind.",
   },
   {
-    icon: <UtensilsIcon className="h-8 w-8 text-red-500" />,
+    icon: <UtensilsIcon className="h-8 w-8 text-orange-500" />,
     title: "Diverse Food Options",
     description:
       "From local favorites to healthy options, discover restaurants that cater to every taste and dietary need.",
   },
   {
-    icon: <UsersIcon className="h-8 w-8 text-teal-500" />,
+    icon: <UsersIcon className="h-8 w-8 text-purple-500" />,
     title: "Group Ordering",
     description: "Split bills and order together with friends - perfect for study sessions and dorm gatherings.",
   },
@@ -88,6 +90,27 @@ const testimonials = [
   },
 ]
 
+const animatedFeatures = [
+  {
+    icon: <BookOpenIcon className="h-12 w-12" />,
+    title: "Study Sessions Made Easy",
+    description: "Order food while studying without leaving the library",
+    color: "from-purple-500 to-purple-600",
+  },
+  {
+    icon: <HomeIcon className="h-12 w-12" />,
+    title: "Dorm Room Delivery",
+    description: "Direct delivery to your dorm room door",
+    color: "from-orange-500 to-orange-600",
+  },
+  {
+    icon: <BuildingIcon className="h-12 w-12" />,
+    title: "Campus-Wide Coverage",
+    description: "Every building, every corner of your campus",
+    color: "from-purple-600 to-orange-500",
+  },
+]
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -112,11 +135,19 @@ const itemVariants = {
 
 export default function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [currentFeature, setCurrentFeature] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTestimonial((current) => (current + 1) % testimonials.length)
     }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFeature((current) => (current + 1) % animatedFeatures.length)
+    }, 3000)
     return () => clearInterval(interval)
   }, [])
 
@@ -130,12 +161,12 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-pink-500 to-blue-500 text-white">
+          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-purple-600 to-orange-500 text-white">
             🎓 Made for Students, by Students
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
               Campus Eats
             </span>
           </h1>
@@ -146,13 +177,20 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button size="lg" className="px-8 py-6 text-lg">
+            <Button
+              size="lg"
+              className="px-8 py-6 text-lg bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600"
+            >
               <DownloadIcon className="mr-2 h-5 w-5" />
               Download App
             </Button>
-            <Button variant="outline" size="lg" className="px-8 py-6 text-lg bg-transparent">
-              <PlayIcon className="mr-2 h-5 w-5" />
-              Watch Demo
+            <Button
+              variant="outline"
+              size="lg"
+              className="px-8 py-6 text-lg bg-transparent border-purple-600 text-purple-600 hover:bg-purple-50"
+            >
+              Learn More
+              <ArrowRightIcon className="ml-2 h-5 w-5" />
             </Button>
           </div>
 
@@ -175,21 +213,73 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Hero Image/Video Section */}
-      <section className="py-12">
+      {/* Animated Campus Eats Description */}
+      <section className="py-16">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-6xl mx-auto px-4"
         >
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-pink-100 to-blue-100 dark:from-pink-900 dark:to-blue-900">
-            <div className="aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <PlayIcon className="h-10 w-10 text-white ml-1" />
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-purple-600 to-orange-500 min-h-[400px]">
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="relative z-10 p-12 text-white">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <motion.h2
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="text-4xl md:text-5xl font-bold mb-6"
+                  >
+                    Campus Life, <span className="text-orange-200">Simplified</span>
+                  </motion.h2>
+                  <motion.p
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                    className="text-xl mb-8 text-purple-100"
+                  >
+                    Campus Eats understands the unique challenges of student life. From late-night study sessions to
+                    group projects, we're here to fuel your academic journey with delicious food delivered right where
+                    you need it.
+                  </motion.p>
                 </div>
-                <p className="text-white text-lg">Watch Campus Eats in Action</p>
+
+                <div className="relative">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentFeature}
+                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -30, scale: 0.9 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-center"
+                    >
+                      <div
+                        className={`w-24 h-24 bg-gradient-to-br ${animatedFeatures[currentFeature].color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}
+                      >
+                        <div className="text-white">{animatedFeatures[currentFeature].icon}</div>
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3 text-orange-100">
+                        {animatedFeatures[currentFeature].title}
+                      </h3>
+                      <p className="text-purple-100 text-lg">{animatedFeatures[currentFeature].description}</p>
+                    </motion.div>
+                  </AnimatePresence>
+
+                  <div className="flex justify-center mt-8 gap-2">
+                    {animatedFeatures.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`w-3 h-3 rounded-full transition-all ${
+                          index === currentFeature ? "bg-orange-200" : "bg-white/30"
+                        }`}
+                        onClick={() => setCurrentFeature(index)}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -208,7 +298,9 @@ export default function Home() {
           >
             {stats.map((stat, index) => (
               <motion.div key={index} variants={itemVariants} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-2">{stat.number}</div>
+                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text mb-2">
+                  {stat.number}
+                </div>
                 <div className="text-muted-foreground">{stat.label}</div>
               </motion.div>
             ))}
@@ -228,7 +320,7 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               What is{" "}
-              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
                 Campus Eats
               </span>
               ?
@@ -249,8 +341,8 @@ export default function Home() {
             >
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <GraduationCapIcon className="h-6 w-6 text-blue-500" />
+                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <GraduationCapIcon className="h-6 w-6 text-purple-600" />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Built for Student Life</h3>
@@ -262,8 +354,8 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <CreditCardIcon className="h-6 w-6 text-green-500" />
+                  <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CreditCardIcon className="h-6 w-6 text-orange-600" />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Student-Friendly Pricing</h3>
@@ -276,7 +368,7 @@ export default function Home() {
 
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPinIcon className="h-6 w-6 text-purple-500" />
+                    <MapPinIcon className="h-6 w-6 text-purple-600" />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Campus-Specific Delivery</h3>
@@ -296,12 +388,12 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="bg-gradient-to-br from-pink-100 to-blue-100 dark:from-pink-900 dark:to-blue-900 rounded-2xl p-8 aspect-square flex items-center justify-center">
+              <div className="bg-gradient-to-br from-purple-100 to-orange-100 dark:from-purple-900 dark:to-orange-900 rounded-2xl p-8 aspect-square flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <UtensilsIcon className="h-16 w-16 text-white" />
+                    <UtensilsIcon className="h-16 w-16 text-purple-600" />
                   </div>
-                  <p className="text-white text-lg">Campus Eats App Interface</p>
+                  <p className="text-purple-700 dark:text-purple-300 text-lg">Campus Eats App Interface</p>
                 </div>
               </div>
             </motion.div>
@@ -321,7 +413,7 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Why Choose{" "}
-              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
                 Campus Eats
               </span>
               ?
@@ -365,7 +457,7 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               How{" "}
-              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
                 Campus Eats
               </span>{" "}
               Works
@@ -383,6 +475,7 @@ export default function Home() {
                 description:
                   "Explore restaurants near your campus, browse menus, and place your order with just a few taps.",
                 icon: <UtensilsIcon className="h-8 w-8" />,
+                color: "from-purple-600 to-purple-700",
               },
               {
                 step: "2",
@@ -390,6 +483,7 @@ export default function Home() {
                 description:
                   "Watch your order being prepared and track your delivery in real-time with our live GPS tracking.",
                 icon: <TruckIcon className="h-8 w-8" />,
+                color: "from-purple-500 to-orange-500",
               },
               {
                 step: "3",
@@ -397,6 +491,7 @@ export default function Home() {
                 description:
                   "Receive your fresh, hot meal delivered right to your dorm, library, or anywhere on campus.",
                 icon: <CheckCircleIcon className="h-8 w-8" />,
+                color: "from-orange-500 to-orange-600",
               },
             ].map((step, index) => (
               <motion.div
@@ -408,11 +503,13 @@ export default function Home() {
                 className="text-center"
               >
                 <div className="relative mb-6">
-                  <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div
+                    className={`w-20 h-20 bg-gradient-to-br ${step.color} rounded-full flex items-center justify-center mx-auto mb-4`}
+                  >
                     <div className="text-white">{step.icon}</div>
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center border-2 border-primary">
-                    <span className="text-sm font-bold text-primary">{step.step}</span>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center border-2 border-purple-600">
+                    <span className="text-sm font-bold text-purple-600">{step.step}</span>
                   </div>
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
@@ -435,7 +532,9 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               What{" "}
-              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">Students</span>{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Students
+              </span>{" "}
               Say
             </h2>
             <p className="text-xl text-muted-foreground">
@@ -485,7 +584,9 @@ export default function Home() {
                 <button
                   key={index}
                   className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentTestimonial ? "bg-primary" : "bg-gray-300 dark:bg-gray-600"
+                    index === currentTestimonial
+                      ? "bg-gradient-to-r from-purple-600 to-orange-500"
+                      : "bg-gray-300 dark:bg-gray-600"
                   }`}
                   onClick={() => setCurrentTestimonial(index)}
                 />
@@ -504,7 +605,7 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <div className="bg-gradient-to-r from-pink-500 to-blue-500 rounded-3xl p-12 text-white">
+          <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-3xl p-12 text-white">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Campus Dining?</h2>
             <p className="text-xl mb-8 opacity-90">
               Join millions of students who have already discovered the easiest way to get great food on campus.
@@ -517,7 +618,7 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="px-8 py-6 text-lg border-white text-white hover:bg-white hover:text-primary bg-transparent"
+                className="px-8 py-6 text-lg border-white text-white hover:bg-white hover:text-purple-600 bg-transparent"
               >
                 Learn More
                 <ArrowRightIcon className="ml-2 h-5 w-5" />
