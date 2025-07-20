@@ -495,38 +495,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <div className="bg-gradient-to-r from-pink-500 to-blue-500 rounded-3xl p-12 text-white">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Campus Dining?</h2>
-            <p className="text-xl mb-8 opacity-90">
-              Join millions of students who have already discovered the easiest way to get great food on campus.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="px-8 py-6 text-lg">
-                <DownloadIcon className="mr-2 h-5 w-5" />
-                Download Now
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="px-8 py-6 text-lg border-white text-white hover:bg-white hover:text-pink-500 bg-transparent"
-              >
-                Learn More
-                <ArrowRightIcon className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </motion.div>
-      </section>
     </Layout>
   )
 }
