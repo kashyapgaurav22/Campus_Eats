@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { Cart } from "@/components/cart"
 import { TestModeIndicator } from "@/components/test-mode-indicator"
+import FooterLinks from "@/components/footer-links"
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -86,7 +87,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         </motion.main>
       </AnimatePresence>
       <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md text-primary dark:text-white mt-auto py-4">
-        <div className="container mx-auto px-4 text-center">© 2025 Campus Eats. All rights reserved.</div>
+        <div className="container mx-auto px-4 text-center">
+          <FooterLinks />
+        </div>
       </footer>
       <TestModeIndicator />
     </div>
