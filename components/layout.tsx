@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   }, [isDarkMode])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md text-primary dark:text-white shadow-md sticky top-0 z-50">
         <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">
@@ -46,17 +46,12 @@ export default function Layout({ children }: { children: ReactNode }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text"
+              className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text"
             >
               Campus Eats
             </motion.span>
           </Link>
           <div className="flex items-center space-x-4">
-            <Link href="/support">
-              <Button variant="ghost" size="sm" className="dark:text-white">
-                Support
-              </Button>
-            </Link>
             <Button variant="ghost" size="icon" onClick={() => setIsDarkMode(!isDarkMode)} className="dark:text-white">
               {isDarkMode ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
             </Button>

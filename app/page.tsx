@@ -6,7 +6,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
-  GraduationCapIcon,
   UtensilsIcon,
   ClockIcon,
   MapPinIcon,
@@ -29,34 +28,34 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const features = [
   {
-    icon: <ClockIcon className="h-8 w-8 text-orange-500" />,
+    icon: <ClockIcon className="h-8 w-8 text-blue-500" />,
     title: "Fast Delivery",
     description: "Get your favorite meals delivered in 30 minutes or less, right to your dorm or campus location.",
   },
   {
-    icon: <MapPinIcon className="h-8 w-8 text-purple-500" />,
+    icon: <MapPinIcon className="h-8 w-8 text-green-500" />,
     title: "Campus-Focused",
     description:
       "Designed specifically for university life with campus-specific delivery zones and student-friendly features.",
   },
   {
-    icon: <CreditCardIcon className="h-8 w-8 text-orange-600" />,
+    icon: <CreditCardIcon className="h-8 w-8 text-purple-500" />,
     title: "Student-Friendly Pricing",
     description: "Affordable delivery fees and exclusive student discounts to fit your budget.",
   },
   {
-    icon: <ShieldCheckIcon className="h-8 w-8 text-purple-600" />,
+    icon: <ShieldCheckIcon className="h-8 w-8 text-orange-500" />,
     title: "Safe & Reliable",
     description: "Verified delivery partners and real-time tracking for peace of mind.",
   },
   {
-    icon: <UtensilsIcon className="h-8 w-8 text-orange-500" />,
+    icon: <UtensilsIcon className="h-8 w-8 text-red-500" />,
     title: "Diverse Food Options",
     description:
       "From local favorites to healthy options, discover restaurants that cater to every taste and dietary need.",
   },
   {
-    icon: <UsersIcon className="h-8 w-8 text-purple-500" />,
+    icon: <UsersIcon className="h-8 w-8 text-teal-500" />,
     title: "Group Ordering",
     description: "Split bills and order together with friends - perfect for study sessions and dorm gatherings.",
   },
@@ -95,19 +94,19 @@ const animatedFeatures = [
     icon: <BookOpenIcon className="h-12 w-12" />,
     title: "Study Sessions Made Easy",
     description: "Order food while studying without leaving the library",
-    color: "from-purple-500 to-purple-600",
+    color: "from-pink-500 to-pink-600",
   },
   {
     icon: <HomeIcon className="h-12 w-12" />,
     title: "Dorm Room Delivery",
     description: "Direct delivery to your dorm room door",
-    color: "from-orange-500 to-orange-600",
+    color: "from-blue-500 to-blue-600",
   },
   {
     icon: <BuildingIcon className="h-12 w-12" />,
     title: "Campus-Wide Coverage",
     description: "Every building, every corner of your campus",
-    color: "from-purple-600 to-orange-500",
+    color: "from-pink-600 to-blue-500",
   },
 ]
 
@@ -161,12 +160,12 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-purple-600 to-orange-500 text-white">
+          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-pink-500 to-blue-500 text-white">
             🎓 Made for Students, by Students
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
               Campus Eats
             </span>
           </h1>
@@ -179,7 +178,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button
               size="lg"
-              className="px-8 py-6 text-lg bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600"
+              className="px-8 py-6 text-lg bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600"
             >
               <DownloadIcon className="mr-2 h-5 w-5" />
               Download App
@@ -187,7 +186,7 @@ export default function Home() {
             <Button
               variant="outline"
               size="lg"
-              className="px-8 py-6 text-lg bg-transparent border-purple-600 text-purple-600 hover:bg-purple-50"
+              className="px-8 py-6 text-lg bg-transparent border-pink-500 text-pink-500 hover:bg-pink-50"
             >
               Learn More
               <ArrowRightIcon className="ml-2 h-5 w-5" />
@@ -221,7 +220,7 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-6xl mx-auto px-4"
         >
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-purple-600 to-orange-500 min-h-[400px]">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-pink-500 to-blue-500 min-h-[400px]">
             <div className="absolute inset-0 bg-black/20" />
             <div className="relative z-10 p-12 text-white">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -232,13 +231,13 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-4xl md:text-5xl font-bold mb-6"
                   >
-                    Campus Life, <span className="text-orange-200">Simplified</span>
+                    Campus Life, <span className="text-blue-200">Simplified</span>
                   </motion.h2>
                   <motion.p
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
-                    className="text-xl mb-8 text-purple-100"
+                    className="text-xl mb-8 text-pink-100"
                   >
                     Campus Eats understands the unique challenges of student life. From late-night study sessions to
                     group projects, we're here to fuel your academic journey with delicious food delivered right where
@@ -261,10 +260,10 @@ export default function Home() {
                       >
                         <div className="text-white">{animatedFeatures[currentFeature].icon}</div>
                       </div>
-                      <h3 className="text-2xl font-bold mb-3 text-orange-100">
+                      <h3 className="text-2xl font-bold mb-3 text-blue-100">
                         {animatedFeatures[currentFeature].title}
                       </h3>
-                      <p className="text-purple-100 text-lg">{animatedFeatures[currentFeature].description}</p>
+                      <p className="text-pink-100 text-lg">{animatedFeatures[currentFeature].description}</p>
                     </motion.div>
                   </AnimatePresence>
 
@@ -273,7 +272,7 @@ export default function Home() {
                       <button
                         key={index}
                         className={`w-3 h-3 rounded-full transition-all ${
-                          index === currentFeature ? "bg-orange-200" : "bg-white/30"
+                          index === currentFeature ? "bg-blue-200" : "bg-white/30"
                         }`}
                         onClick={() => setCurrentFeature(index)}
                       />
@@ -298,106 +297,11 @@ export default function Home() {
           >
             {stats.map((stat, index) => (
               <motion.div key={index} variants={itemVariants} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text mb-2">
-                  {stat.number}
-                </div>
+                <div className="text-4xl md:text-5xl font-bold text-primary mb-2">{stat.number}</div>
                 <div className="text-muted-foreground">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
-        </div>
-      </section>
-
-      {/* What is Campus Eats Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              What is{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Campus Eats
-              </span>
-              ?
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Campus Eats is the first food delivery platform built exclusively for university students. We understand
-              the unique challenges of campus life and have created a solution that works for your schedule, budget, and
-              location.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <GraduationCapIcon className="h-6 w-6 text-purple-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Built for Student Life</h3>
-                    <p className="text-muted-foreground">
-                      From dorm deliveries to late-night study sessions, we understand what students need and when they
-                      need it.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <CreditCardIcon className="h-6 w-6 text-orange-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Student-Friendly Pricing</h3>
-                    <p className="text-muted-foreground">
-                      Low delivery fees, student discounts, and meal plan integration make quality food affordable for
-                      every budget.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPinIcon className="h-6 w-6 text-purple-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Campus-Specific Delivery</h3>
-                    <p className="text-muted-foreground">
-                      Our delivery partners know every building, dorm, and study spot on campus. No more confusing
-                      directions or missed deliveries.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              <div className="bg-gradient-to-br from-purple-100 to-orange-100 dark:from-purple-900 dark:to-orange-900 rounded-2xl p-8 aspect-square flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <UtensilsIcon className="h-16 w-16 text-purple-600" />
-                  </div>
-                  <p className="text-purple-700 dark:text-purple-300 text-lg">Campus Eats App Interface</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
 
@@ -413,7 +317,7 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Why Choose{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
                 Campus Eats
               </span>
               ?
@@ -457,7 +361,7 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               How{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
                 Campus Eats
               </span>{" "}
               Works
@@ -475,7 +379,7 @@ export default function Home() {
                 description:
                   "Explore restaurants near your campus, browse menus, and place your order with just a few taps.",
                 icon: <UtensilsIcon className="h-8 w-8" />,
-                color: "from-purple-600 to-purple-700",
+                color: "from-pink-500 to-pink-600",
               },
               {
                 step: "2",
@@ -483,7 +387,7 @@ export default function Home() {
                 description:
                   "Watch your order being prepared and track your delivery in real-time with our live GPS tracking.",
                 icon: <TruckIcon className="h-8 w-8" />,
-                color: "from-purple-500 to-orange-500",
+                color: "from-pink-500 to-blue-500",
               },
               {
                 step: "3",
@@ -491,7 +395,7 @@ export default function Home() {
                 description:
                   "Receive your fresh, hot meal delivered right to your dorm, library, or anywhere on campus.",
                 icon: <CheckCircleIcon className="h-8 w-8" />,
-                color: "from-orange-500 to-orange-600",
+                color: "from-blue-500 to-blue-600",
               },
             ].map((step, index) => (
               <motion.div
@@ -508,8 +412,8 @@ export default function Home() {
                   >
                     <div className="text-white">{step.icon}</div>
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center border-2 border-purple-600">
-                    <span className="text-sm font-bold text-purple-600">{step.step}</span>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center border-2 border-primary">
+                    <span className="text-sm font-bold text-primary">{step.step}</span>
                   </div>
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
@@ -532,9 +436,7 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               What{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Students
-              </span>{" "}
+              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">Students</span>{" "}
               Say
             </h2>
             <p className="text-xl text-muted-foreground">
@@ -584,9 +486,7 @@ export default function Home() {
                 <button
                   key={index}
                   className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentTestimonial
-                      ? "bg-gradient-to-r from-purple-600 to-orange-500"
-                      : "bg-gray-300 dark:bg-gray-600"
+                    index === currentTestimonial ? "bg-primary" : "bg-gray-300 dark:bg-gray-600"
                   }`}
                   onClick={() => setCurrentTestimonial(index)}
                 />
@@ -605,7 +505,7 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-3xl p-12 text-white">
+          <div className="bg-gradient-to-r from-pink-500 to-blue-500 rounded-3xl p-12 text-white">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Campus Dining?</h2>
             <p className="text-xl mb-8 opacity-90">
               Join millions of students who have already discovered the easiest way to get great food on campus.
@@ -618,7 +518,7 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="px-8 py-6 text-lg border-white text-white hover:bg-white hover:text-purple-600 bg-transparent"
+                className="px-8 py-6 text-lg border-white text-white hover:bg-white hover:text-pink-500 bg-transparent"
               >
                 Learn More
                 <ArrowRightIcon className="ml-2 h-5 w-5" />
