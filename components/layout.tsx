@@ -39,9 +39,7 @@ export default function Layout({ children }: LayoutProps) {
                 height={40}
                 className="rounded-lg"
               />
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Campus Eats
-              </span>
+              <span className="text-2xl font-bold text-purple-600">Campus Eats</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -144,9 +142,7 @@ export default function Layout({ children }: LayoutProps) {
                   height={32}
                   className="rounded-lg"
                 />
-                <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                  Campus Eats
-                </span>
+                <span className="text-xl font-bold text-purple-600">Campus Eats</span>
               </div>
               <p className="text-gray-600 text-sm">
                 The food delivery app designed specifically for university students.

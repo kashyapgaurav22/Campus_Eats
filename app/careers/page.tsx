@@ -95,14 +95,9 @@ export default function CareersPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-purple-500 to-orange-500 text-white">
-            Join Our Team
-          </Badge>
+          <Badge className="mb-6 px-4 py-2 text-sm bg-purple-600 text-white">Join Our Team</Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Careers at{" "}
-            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-              Campus Eats
-            </span>
+            Careers at <span className="text-purple-600">Campus Eats</span>
           </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Help us revolutionize campus dining while building your career in a fast-growing, mission-driven company
@@ -118,7 +113,7 @@ export default function CareersPage() {
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
-          <div className="bg-gradient-to-br from-purple-500 to-orange-500 rounded-3xl p-12 text-white">
+          <div className="bg-purple-600 rounded-3xl p-12 text-white">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Our Culture</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
@@ -155,10 +150,7 @@ export default function CareersPage() {
           className="mb-20"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Why Work{" "}
-            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-              With Us?
-            </span>
+            Why Work <span className="text-purple-600">With Us?</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {benefits.map((benefit, index) => (
@@ -190,10 +182,7 @@ export default function CareersPage() {
           className="mb-20"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Open{" "}
-            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-              Positions
-            </span>
+            Open <span className="text-purple-600">Positions</span>
           </h2>
           <div className="space-y-6">
             {openPositions.map((position, index) => (
@@ -234,9 +223,7 @@ export default function CareersPage() {
                         <p className="text-gray-700">{position.description}</p>
                       </div>
                       <div className="flex-shrink-0">
-                        <Button className="bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600">
-                          Apply Now
-                        </Button>
+                        <Button className="bg-purple-600 hover:bg-purple-700">Apply Now</Button>
                       </div>
                     </div>
                   </CardContent>
@@ -254,7 +241,7 @@ export default function CareersPage() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <div className="bg-gradient-to-br from-purple-500 to-orange-500 rounded-3xl p-12 text-white">
+          <div className="bg-purple-600 rounded-3xl p-12 text-white">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Don't See Your Role?</h2>
             <p className="text-xl mb-8 text-purple-100 max-w-2xl mx-auto">
               We're always looking for talented individuals who share our passion for improving student life. Send us

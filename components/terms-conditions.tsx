@@ -16,9 +16,7 @@ export default function TermsConditions() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-          Terms & Conditions
-        </h1>
+        <h1 className="text-4xl font-bold mb-4 text-purple-600">Terms & Conditions</h1>
         <p className="text-lg text-muted-foreground">
           By accessing or using Campus Eats, you agree to the following terms:
         </p>

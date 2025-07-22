@@ -92,19 +92,19 @@ const animatedFeatures = [
     icon: <BookOpenIcon className="h-12 w-12" />,
     title: "Study Sessions Made Easy",
     description: "Order food while studying without leaving the library",
-    color: "from-purple-500 to-purple-600",
+    color: "bg-purple-500",
   },
   {
     icon: <HomeIcon className="h-12 w-12" />,
     title: "Dorm Room Delivery",
     description: "Direct delivery to your dorm room door",
-    color: "from-orange-500 to-orange-600",
+    color: "bg-orange-500",
   },
   {
     icon: <BuildingIcon className="h-12 w-12" />,
     title: "Campus-Wide Coverage",
     description: "Every building, every corner of your campus",
-    color: "from-purple-600 to-orange-500",
+    color: "bg-purple-600",
   },
 ]
 
@@ -158,14 +158,10 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-purple-500 to-orange-500 text-white">
-            🎓 Made for Students, by Students
-          </Badge>
+          <Badge className="mb-6 px-4 py-2 text-sm bg-purple-600 text-white">🎓 Made for Students, by Students</Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-              Campus Eats
-            </span>
+            <span className="text-purple-600">Campus Eats</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
@@ -173,10 +169,7 @@ export default function Home() {
             affordable, and right to your campus location.
           </p>
 
-          <Button
-            size="lg"
-            className="px-8 py-6 text-lg bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600"
-          >
+          <Button size="lg" className="px-8 py-6 text-lg bg-purple-600 hover:bg-purple-700">
             <DownloadIcon className="mr-2 h-5 w-5" />
             Get the App
           </Button>
@@ -191,7 +184,7 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-6xl mx-auto px-4"
         >
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-purple-500 to-orange-500 min-h-[400px]">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-purple-600 min-h-[400px]">
             <div className="absolute inset-0 bg-black/20" />
             <div className="relative z-10 p-12 text-white">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -227,7 +220,7 @@ export default function Home() {
                       className="text-center"
                     >
                       <div
-                        className={`w-24 h-24 bg-gradient-to-br ${animatedFeatures[currentFeature].color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}
+                        className={`w-24 h-24 ${animatedFeatures[currentFeature].color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}
                       >
                         <div className="text-white">{animatedFeatures[currentFeature].icon}</div>
                       </div>
@@ -267,11 +260,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              How{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Campus Eats
-              </span>{" "}
-              Works
+              How <span className="text-purple-600">Campus Eats</span> Works
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Getting your favorite food delivered to campus is as easy as 1-2-3.
@@ -286,7 +275,7 @@ export default function Home() {
                 description:
                   "Explore restaurants near your campus, browse menus, and place your order with just a few taps.",
                 icon: <UtensilsIcon className="h-8 w-8" />,
-                color: "from-purple-500 to-purple-600",
+                color: "bg-purple-500",
               },
               {
                 step: "2",
@@ -294,7 +283,7 @@ export default function Home() {
                 description:
                   "Watch your order being prepared and track your delivery in real-time with our live GPS tracking.",
                 icon: <TruckIcon className="h-8 w-8" />,
-                color: "from-purple-500 to-orange-500",
+                color: "bg-purple-600",
               },
               {
                 step: "3",
@@ -302,7 +291,7 @@ export default function Home() {
                 description:
                   "Receive your fresh, hot meal delivered right to your dorm, library, or anywhere on campus.",
                 icon: <CheckCircleIcon className="h-8 w-8" />,
-                color: "from-orange-500 to-orange-600",
+                color: "bg-orange-500",
               },
             ].map((step, index) => (
               <motion.div
@@ -314,9 +303,7 @@ export default function Home() {
                 className="text-center"
               >
                 <div className="relative mb-6">
-                  <div
-                    className={`w-20 h-20 bg-gradient-to-br ${step.color} rounded-full flex items-center justify-center mx-auto mb-4`}
-                  >
+                  <div className={`w-20 h-20 ${step.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
                     <div className="text-white">{step.icon}</div>
                   </div>
                   <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center border-2 border-purple-500">
@@ -342,10 +329,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              For{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Students
-              </span>
+              For <span className="text-purple-600">Students</span>
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Built by students who understand the unique challenges of campus life.
@@ -379,9 +363,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Universities
-              </span>
+              <span className="text-purple-600">Universities</span>
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Serving students at top universities across the country.
@@ -442,9 +424,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Student Discounts
-              </span>
+              <span className="text-purple-600">Student Discounts</span>
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Save money with exclusive student offers and budget-friendly pricing.
@@ -504,9 +484,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Campus Locations
-              </span>
+              <span className="text-purple-600">Campus Locations</span>
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               We deliver to every corner of your campus, from dorms to libraries to study halls.
@@ -567,11 +545,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Why Choose{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Campus Eats
-              </span>
-              ?
+              Why Choose <span className="text-purple-600">Campus Eats</span>?
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               We've designed every feature with student needs in mind, from budget constraints to busy schedules.
@@ -611,11 +585,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              What{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-                Students
-              </span>{" "}
-              Say
+              What <span className="text-purple-600">Students</span> Say
             </h2>
             <p className="text-xl text-gray-700">Join thousands of satisfied students across 100+ universities.</p>
           </motion.div>

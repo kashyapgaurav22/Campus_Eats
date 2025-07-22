@@ -8,9 +8,7 @@ export default function PrivacyPolicy() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-          Privacy Policy
-        </h1>
+        <h1 className="text-4xl font-bold mb-4 text-purple-600">Privacy Policy</h1>
         <p className="text-lg text-muted-foreground">
           Campus Eats is committed to protecting your privacy. This Privacy Policy explains how we collect, use,
           disclose, and safeguard your information when you use our platform.

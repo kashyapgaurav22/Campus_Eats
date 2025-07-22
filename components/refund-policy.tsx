@@ -8,9 +8,7 @@ export default function RefundPolicy() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
-          Refund Policy
-        </h1>
+        <h1 className="text-4xl font-bold mb-4 text-purple-600">Refund Policy</h1>
         <p className="text-lg text-muted-foreground">
           We want you to have a smooth experience. Here's our refund policy:
         </p>
