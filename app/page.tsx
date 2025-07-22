@@ -10,54 +10,52 @@ import {
   ClockIcon,
   MapPinIcon,
   ShieldCheckIcon,
-  TruckIcon,
   StarIcon,
   CreditCardIcon,
-  UsersIcon,
-  CheckCircleIcon,
-  ArrowRightIcon,
   DownloadIcon,
-  AppleIcon,
-  SmartphoneIcon,
   BookOpenIcon,
   HomeIcon,
   BuildingIcon,
+  GraduationCapIcon,
+  PercentIcon,
+  TruckIcon,
+  CheckCircleIcon,
 } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 
 const features = [
   {
-    icon: <ClockIcon className="h-8 w-8 text-blue-500" />,
+    icon: <ClockIcon className="h-8 w-8 text-orange-500" />,
     title: "Fast Delivery",
     description: "Get your favorite meals delivered in 30 minutes or less, right to your dorm or campus location.",
   },
   {
-    icon: <MapPinIcon className="h-8 w-8 text-green-500" />,
+    icon: <MapPinIcon className="h-8 w-8 text-purple-500" />,
     title: "Campus-Focused",
     description:
       "Designed specifically for university life with campus-specific delivery zones and student-friendly features.",
   },
   {
-    icon: <CreditCardIcon className="h-8 w-8 text-purple-500" />,
+    icon: <CreditCardIcon className="h-8 w-8 text-orange-500" />,
     title: "Student-Friendly Pricing",
     description: "Affordable delivery fees and exclusive student discounts to fit your budget.",
   },
   {
-    icon: <ShieldCheckIcon className="h-8 w-8 text-orange-500" />,
+    icon: <ShieldCheckIcon className="h-8 w-8 text-purple-500" />,
     title: "Safe & Reliable",
     description: "Verified delivery partners and real-time tracking for peace of mind.",
   },
   {
-    icon: <UtensilsIcon className="h-8 w-8 text-red-500" />,
+    icon: <UtensilsIcon className="h-8 w-8 text-orange-500" />,
     title: "Diverse Food Options",
     description:
       "From local favorites to healthy options, discover restaurants that cater to every taste and dietary need.",
   },
   {
-    icon: <UsersIcon className="h-8 w-8 text-teal-500" />,
-    title: "Group Ordering",
-    description: "Split bills and order together with friends - perfect for study sessions and dorm gatherings.",
+    icon: <TruckIcon className="h-8 w-8 text-purple-500" />,
+    title: "Scheduled Pickup",
+    description: "Pre-order your meals and pick them up at your convenience with our scheduled pickup service.",
   },
 ]
 
@@ -84,7 +82,7 @@ const testimonials = [
   {
     name: "Jessica L.",
     university: "Stanford",
-    text: "The group ordering feature is amazing! My roommates and I use it all the time for our study sessions.",
+    text: "The scheduled pickup feature is amazing! I can pre-order my lunch and grab it between classes without waiting.",
     avatar: "https://i.pravatar.cc/150?img=3",
   },
 ]
@@ -94,19 +92,19 @@ const animatedFeatures = [
     icon: <BookOpenIcon className="h-12 w-12" />,
     title: "Study Sessions Made Easy",
     description: "Order food while studying without leaving the library",
-    color: "from-pink-500 to-pink-600",
+    color: "from-purple-500 to-purple-600",
   },
   {
     icon: <HomeIcon className="h-12 w-12" />,
     title: "Dorm Room Delivery",
     description: "Direct delivery to your dorm room door",
-    color: "from-blue-500 to-blue-600",
+    color: "from-orange-500 to-orange-600",
   },
   {
     icon: <BuildingIcon className="h-12 w-12" />,
     title: "Campus-Wide Coverage",
     description: "Every building, every corner of your campus",
-    color: "from-pink-600 to-blue-500",
+    color: "from-purple-600 to-orange-500",
   },
 ]
 
@@ -153,62 +151,35 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="text-center py-20 px-4">
+      <section className="text-center py-24 px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-pink-500 to-blue-500 text-white">
+          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-purple-500 to-orange-500 text-white">
             🎓 Made for Students, by Students
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
               Campus Eats
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
             The food delivery app designed specifically for university students. Get your favorite meals delivered fast,
             affordable, and right to your campus location.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button
-              size="lg"
-              className="px-8 py-6 text-lg bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600"
-            >
-              <DownloadIcon className="mr-2 h-5 w-5" />
-              Download App
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="px-8 py-6 text-lg bg-transparent border-pink-500 text-pink-500 hover:bg-pink-50"
-            >
-              Learn More
-              <ArrowRightIcon className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg">
-              <AppleIcon className="h-6 w-6" />
-              <div className="text-left">
-                <div className="text-xs">Download on the</div>
-                <div className="text-sm font-semibold">App Store</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg">
-              <SmartphoneIcon className="h-6 w-6" />
-              <div className="text-left">
-                <div className="text-xs">Get it on</div>
-                <div className="text-sm font-semibold">Google Play</div>
-              </div>
-            </div>
-          </div>
+          <Button
+            size="lg"
+            className="px-8 py-6 text-lg bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600"
+          >
+            <DownloadIcon className="mr-2 h-5 w-5" />
+            Get the App
+          </Button>
         </motion.div>
       </section>
 
@@ -220,7 +191,7 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-6xl mx-auto px-4"
         >
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-pink-500 to-blue-500 min-h-[400px]">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-purple-500 to-orange-500 min-h-[400px]">
             <div className="absolute inset-0 bg-black/20" />
             <div className="relative z-10 p-12 text-white">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -231,17 +202,17 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-4xl md:text-5xl font-bold mb-6"
                   >
-                    Campus Life, <span className="text-blue-200">Simplified</span>
+                    Campus Life, <span className="text-orange-200">Simplified</span>
                   </motion.h2>
                   <motion.p
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
-                    className="text-xl mb-8 text-pink-100"
+                    className="text-xl mb-8 text-purple-100"
                   >
                     Campus Eats understands the unique challenges of student life. From late-night study sessions to
-                    group projects, we're here to fuel your academic journey with delicious food delivered right where
-                    you need it.
+                    scheduled pickups between classes, we're here to fuel your academic journey with delicious food
+                    delivered right where you need it.
                   </motion.p>
                 </div>
 
@@ -260,10 +231,10 @@ export default function Home() {
                       >
                         <div className="text-white">{animatedFeatures[currentFeature].icon}</div>
                       </div>
-                      <h3 className="text-2xl font-bold mb-3 text-blue-100">
+                      <h3 className="text-2xl font-bold mb-3 text-orange-100">
                         {animatedFeatures[currentFeature].title}
                       </h3>
-                      <p className="text-pink-100 text-lg">{animatedFeatures[currentFeature].description}</p>
+                      <p className="text-purple-100 text-lg">{animatedFeatures[currentFeature].description}</p>
                     </motion.div>
                   </AnimatePresence>
 
@@ -272,7 +243,7 @@ export default function Home() {
                       <button
                         key={index}
                         className={`w-3 h-3 rounded-full transition-all ${
-                          index === currentFeature ? "bg-blue-200" : "bg-white/30"
+                          index === currentFeature ? "bg-orange-200" : "bg-white/30"
                         }`}
                         onClick={() => setCurrentFeature(index)}
                       />
@@ -285,72 +256,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8"
-          >
-            {stats.map((stat, index) => (
-              <motion.div key={index} variants={itemVariants} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-2">{stat.number}</div>
-                <div className="text-muted-foreground">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Why Choose{" "}
-              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
-                Campus Eats
-              </span>
-              ?
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We've designed every feature with student needs in mind, from budget constraints to busy schedules.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {features.map((feature, index) => (
-              <motion.div key={index} variants={itemVariants}>
-                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
-                  <CardContent className="p-6">
-                    <div className="mb-4">{feature.icon}</div>
-                    <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                    <p className="text-muted-foreground">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* How It Works Section */}
-      <section className="py-20 px-4">
+      <section id="how-it-works" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -361,12 +268,12 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               How{" "}
-              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
                 Campus Eats
               </span>{" "}
               Works
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Getting your favorite food delivered to campus is as easy as 1-2-3.
             </p>
           </motion.div>
@@ -379,7 +286,7 @@ export default function Home() {
                 description:
                   "Explore restaurants near your campus, browse menus, and place your order with just a few taps.",
                 icon: <UtensilsIcon className="h-8 w-8" />,
-                color: "from-pink-500 to-pink-600",
+                color: "from-purple-500 to-purple-600",
               },
               {
                 step: "2",
@@ -387,7 +294,7 @@ export default function Home() {
                 description:
                   "Watch your order being prepared and track your delivery in real-time with our live GPS tracking.",
                 icon: <TruckIcon className="h-8 w-8" />,
-                color: "from-pink-500 to-blue-500",
+                color: "from-purple-500 to-orange-500",
               },
               {
                 step: "3",
@@ -395,7 +302,7 @@ export default function Home() {
                 description:
                   "Receive your fresh, hot meal delivered right to your dorm, library, or anywhere on campus.",
                 icon: <CheckCircleIcon className="h-8 w-8" />,
-                color: "from-blue-500 to-blue-600",
+                color: "from-orange-500 to-orange-600",
               },
             ].map((step, index) => (
               <motion.div
@@ -412,20 +319,289 @@ export default function Home() {
                   >
                     <div className="text-white">{step.icon}</div>
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center border-2 border-primary">
-                    <span className="text-sm font-bold text-primary">{step.step}</span>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center border-2 border-purple-500">
+                    <span className="text-sm font-bold text-purple-500">{step.step}</span>
                   </div>
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                <p className="text-muted-foreground">{step.description}</p>
+                <p className="text-gray-600">{step.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* For Students Section */}
+      <section id="for-students" className="py-16 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              For{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Students
+              </span>
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              Built by students who understand the unique challenges of campus life.
+            </p>
+          </motion.div>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8"
+          >
+            {stats.map((stat, index) => (
+              <motion.div key={index} variants={itemVariants} className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-purple-600 mb-2">{stat.number}</div>
+                <div className="text-gray-600">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Universities Section */}
+      <section id="universities" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Universities
+              </span>
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              Serving students at top universities across the country.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                name: "UC Berkeley",
+                students: "45,000+",
+                icon: <GraduationCapIcon className="h-8 w-8 text-purple-500" />,
+              },
+              {
+                name: "Stanford",
+                students: "17,000+",
+                icon: <GraduationCapIcon className="h-8 w-8 text-orange-500" />,
+              },
+              {
+                name: "NYU",
+                students: "51,000+",
+                icon: <GraduationCapIcon className="h-8 w-8 text-purple-500" />,
+              },
+              {
+                name: "MIT",
+                students: "11,000+",
+                icon: <GraduationCapIcon className="h-8 w-8 text-orange-500" />,
+              },
+            ].map((university, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+              >
+                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-none">
+                  <CardContent className="p-6 text-center">
+                    <div className="mb-4">{university.icon}</div>
+                    <h3 className="text-lg font-semibold mb-2">{university.name}</h3>
+                    <p className="text-gray-600 text-sm">{university.students} students</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Student Discounts Section */}
+      <section id="discounts" className="py-20 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Student Discounts
+              </span>
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              Save money with exclusive student offers and budget-friendly pricing.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Student ID Verification",
+                description: "Get verified with your college ID and unlock exclusive discounts",
+                icon: <GraduationCapIcon className="h-12 w-12 text-purple-500" />,
+                discount: "15% OFF",
+              },
+              {
+                title: "First Order Discount",
+                description: "New students get a special welcome discount on their first order",
+                icon: <PercentIcon className="h-12 w-12 text-orange-500" />,
+                discount: "25% OFF",
+              },
+              {
+                title: "Scheduled Pickup Savings",
+                description: "Save more when you schedule your pickup in advance",
+                icon: <ClockIcon className="h-12 w-12 text-purple-500" />,
+                discount: "Up to 20% OFF",
+              },
+            ].map((discount, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+              >
+                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-none">
+                  <CardContent className="p-6 text-center">
+                    <div className="mb-4">{discount.icon}</div>
+                    <div className="text-2xl font-bold text-purple-600 mb-2">{discount.discount}</div>
+                    <h3 className="text-xl font-semibold mb-3">{discount.title}</h3>
+                    <p className="text-gray-600">{discount.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Campus Locations Section */}
+      <section id="campus-locations" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Campus Locations
+              </span>
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              We deliver to every corner of your campus, from dorms to libraries to study halls.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Dormitories",
+                description: "Direct delivery to your dorm room",
+                icon: <HomeIcon className="h-8 w-8 text-purple-500" />,
+              },
+              {
+                title: "Libraries",
+                description: "Fuel your study sessions",
+                icon: <BookOpenIcon className="h-8 w-8 text-orange-500" />,
+              },
+              {
+                title: "Academic Buildings",
+                description: "Between classes convenience",
+                icon: <BuildingIcon className="h-8 w-8 text-purple-500" />,
+              },
+              {
+                title: "Common Areas",
+                description: "Student lounges and quads",
+                icon: <MapPinIcon className="h-8 w-8 text-orange-500" />,
+              },
+            ].map((location, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+              >
+                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-none">
+                  <CardContent className="p-6 text-center">
+                    <div className="mb-4">{location.icon}</div>
+                    <h3 className="text-lg font-semibold mb-2">{location.title}</h3>
+                    <p className="text-gray-600 text-sm">{location.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Why Choose{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Campus Eats
+              </span>
+              ?
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              We've designed every feature with student needs in mind, from budget constraints to busy schedules.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {features.map((feature, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-none">
+                  <CardContent className="p-6">
+                    <div className="mb-4">{feature.icon}</div>
+                    <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                    <p className="text-gray-600">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
-      <section className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+      <section className="py-20 bg-white/50 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -436,12 +612,12 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               What{" "}
-              <span className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">Students</span>{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Students
+              </span>{" "}
               Say
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Join thousands of satisfied students across 100+ universities.
-            </p>
+            <p className="text-xl text-gray-700">Join thousands of satisfied students across 100+ universities.</p>
           </motion.div>
 
           <div className="relative">
@@ -453,16 +629,14 @@ export default function Home() {
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.5 }}
               >
-                <Card className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm border-none">
+                <Card className="bg-white/80 backdrop-blur-sm border-none">
                   <CardContent className="p-8 text-center">
                     <div className="flex justify-center mb-4">
                       {[...Array(5)].map((_, i) => (
                         <StarIcon key={i} className="h-5 w-5 text-yellow-400 fill-current" />
                       ))}
                     </div>
-                    <p className="text-lg text-muted-foreground mb-6 italic">
-                      "{testimonials[currentTestimonial].text}"
-                    </p>
+                    <p className="text-lg text-gray-600 mb-6 italic">"{testimonials[currentTestimonial].text}"</p>
                     <div className="flex items-center justify-center gap-4">
                       <Image
                         src={testimonials[currentTestimonial].avatar || "/placeholder.svg"}
@@ -473,7 +647,7 @@ export default function Home() {
                       />
                       <div>
                         <p className="font-semibold">{testimonials[currentTestimonial].name}</p>
-                        <p className="text-sm text-muted-foreground">{testimonials[currentTestimonial].university}</p>
+                        <p className="text-sm text-gray-600">{testimonials[currentTestimonial].university}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -486,7 +660,7 @@ export default function Home() {
                 <button
                   key={index}
                   className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentTestimonial ? "bg-primary" : "bg-gray-300 dark:bg-gray-600"
+                    index === currentTestimonial ? "bg-purple-600" : "bg-gray-300"
                   }`}
                   onClick={() => setCurrentTestimonial(index)}
                 />

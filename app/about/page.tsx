@@ -1,214 +1,290 @@
 "use client"
 
 import Layout from "@/components/layout"
-import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Target, Heart, Award } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { motion } from "framer-motion"
+import { HeartIcon, UsersIcon, TrophyIcon, GlobeIcon, StarIcon } from "lucide-react"
+import Image from "next/image"
+
+const values = [
+  {
+    icon: <HeartIcon className="h-8 w-8 text-purple-500" />,
+    title: "Student-First",
+    description: "Every decision we make puts student needs and experiences at the center.",
+  },
+  {
+    icon: <UsersIcon className="h-8 w-8 text-orange-500" />,
+    title: "Community",
+    description: "Building connections between students, restaurants, and local businesses.",
+  },
+  {
+    icon: <TrophyIcon className="h-8 w-8 text-purple-500" />,
+    title: "Excellence",
+    description: "Delivering exceptional service and continuously improving our platform.",
+  },
+  {
+    icon: <GlobeIcon className="h-8 w-8 text-orange-500" />,
+    title: "Accessibility",
+    description: "Making quality food delivery accessible and affordable for all students.",
+  },
+]
+
+const team = [
+  {
+    name: "Alex Chen",
+    role: "CEO & Co-Founder",
+    bio: "Former Stanford student who experienced the campus food delivery gap firsthand.",
+    image: "https://i.pravatar.cc/150?img=5",
+  },
+  {
+    name: "Sarah Johnson",
+    role: "CTO & Co-Founder",
+    bio: "MIT graduate with expertise in logistics and mobile app development.",
+    image: "https://i.pravatar.cc/150?img=6",
+  },
+  {
+    name: "Marcus Rodriguez",
+    role: "Head of Operations",
+    bio: "Berkeley alum focused on scaling delivery operations across university campuses.",
+    image: "https://i.pravatar.cc/150?img=7",
+  },
+  {
+    name: "Emily Park",
+    role: "Head of Student Experience",
+    bio: "UCLA graduate dedicated to creating the best possible experience for student users.",
+    image: "https://i.pravatar.cc/150?img=8",
+  },
+]
+
+const stats = [
+  { number: "2020", label: "Founded" },
+  { number: "100+", label: "Universities" },
+  { number: "500K+", label: "Active Students" },
+  { number: "2M+", label: "Orders Delivered" },
+]
 
 export default function AboutPage() {
-  const values = [
-    {
-      icon: Users,
-      title: "Student-First",
-      description:
-        "Everything we do is designed with students in mind - from affordable pricing to campus-friendly delivery.",
-    },
-    {
-      icon: Target,
-      title: "Reliability",
-      description: "We understand you're busy studying. That's why we guarantee fast, reliable delivery every time.",
-    },
-    {
-      icon: Heart,
-      title: "Community",
-      description: "Building stronger campus communities by connecting students with local restaurants and each other.",
-    },
-    {
-      icon: Award,
-      title: "Quality",
-      description: "We partner only with the best local restaurants to ensure every meal meets our high standards.",
-    },
-  ]
-
-  const team = [
-    {
-      name: "Alex Johnson",
-      role: "CEO & Co-Founder",
-      description: "Former Stanford student who experienced the campus dining struggle firsthand.",
-    },
-    {
-      name: "Sarah Chen",
-      role: "CTO & Co-Founder",
-      description: "Tech enthusiast passionate about solving real-world problems through innovation.",
-    },
-    {
-      name: "Mike Rodriguez",
-      role: "Head of Operations",
-      description: "Logistics expert ensuring smooth deliveries across all partner campuses.",
-    },
-    {
-      name: "Emma Thompson",
-      role: "Head of Partnerships",
-      description: "Building relationships with restaurants and universities nationwide.",
-    },
-  ]
-
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto space-y-16">
+      <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Hero Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center space-y-6"
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text">
-            About Campus Eats
+          <Badge className="mb-6 px-4 py-2 text-sm bg-gradient-to-r from-purple-500 to-orange-500 text-white">
+            Our Story
+          </Badge>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            About{" "}
+            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+              Campus Eats
+            </span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            We're on a mission to revolutionize campus dining by making delicious food accessible, affordable, and
-            convenient for every student.
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            We're on a mission to revolutionize how students access food on campus, making it faster, more affordable,
+            and perfectly tailored to university life.
           </p>
         </motion.div>
 
-        {/* Story Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-12 items-center"
+        {/* Mission Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Our Story</h2>
-            <div className="space-y-4 text-gray-600 dark:text-gray-300">
-              <p>
-                Campus Eats was born in a dorm room in 2020 when two hungry students realized that campus dining options
-                were limited, expensive, and often closed when they needed food the most.
-              </p>
-              <p>
-                What started as a simple idea to connect students with local restaurants has grown into a platform
-                serving over 50 universities nationwide, delivering millions of meals to hungry students.
-              </p>
-              <p>
-                Today, we're proud to be the go-to food delivery service for students, offering everything from
-                late-night snacks to group study session meals.
-              </p>
+          <div className="bg-gradient-to-br from-purple-500 to-orange-500 rounded-3xl p-12 text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Our Mission</h2>
+            <p className="text-xl text-center max-w-4xl mx-auto text-purple-100">
+              To empower students with convenient, affordable access to quality food delivery services that understand
+              and cater to the unique demands of campus life. We believe that good food shouldn't be a luxury for
+              students – it should be accessible, reliable, and designed around their schedules and budgets.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* Story Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                How It All{" "}
+                <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                  Started
+                </span>
+              </h2>
+              <div className="space-y-4 text-gray-700">
+                <p>
+                  Campus Eats was born out of frustration. As college students, our founders experienced firsthand the
+                  challenges of getting quality food delivered to campus – long wait times, high delivery fees, and
+                  services that didn't understand university layouts or student schedules.
+                </p>
+                <p>
+                  In 2020, during their final year at Stanford, Alex and Sarah decided to build the solution they wished
+                  existed. Starting with just five local restaurants and their own dorm building, they created a
+                  delivery service specifically designed for student life.
+                </p>
+                <p>
+                  Today, Campus Eats serves over 100 universities nationwide, but we haven't forgotten our roots. Every
+                  feature we build, every partnership we form, and every decision we make is guided by one simple
+                  question: "How does this make life better for students?"
+                </p>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="bg-gradient-to-br from-purple-100 to-orange-100 rounded-2xl p-8 aspect-square flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <StarIcon className="h-16 w-16 text-purple-600" />
+                  </div>
+                  <p className="text-purple-700 text-lg">Founded by Students, for Students</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="relative">
-            <img
-              src="/placeholder.svg?height=400&width=500"
-              alt="Students enjoying food on campus"
-              className="rounded-lg shadow-lg w-full"
-            />
-          </div>
-        </motion.div>
+        </motion.section>
 
         {/* Values Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="space-y-12"
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our Values</h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              These core values guide everything we do and help us stay focused on what matters most.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Our{" "}
+            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">Values</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {values.map((value, index) => (
               <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 * index }}
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
               >
-                <Card className="h-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-6 text-center space-y-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-blue-500 rounded-lg flex items-center justify-center mx-auto">
-                      <value.icon className="h-6 w-6 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{value.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">{value.description}</p>
+                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-none">
+                  <CardContent className="p-6">
+                    <div className="mb-4">{value.icon}</div>
+                    <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
+                    <p className="text-gray-600">{value.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
           </div>
-        </motion.div>
-
-        {/* Team Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="space-y-12"
-        >
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Meet Our Team</h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              The passionate people behind Campus Eats who work tirelessly to serve students better.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 * index }}
-              >
-                <Card className="h-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-6 text-center space-y-4">
-                    <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-blue-500 rounded-full mx-auto flex items-center justify-center">
-                      <span className="text-white text-2xl font-bold">
-                        {member.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </span>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{member.name}</h3>
-                      <p className="text-pink-500 font-medium text-sm">{member.role}</p>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">{member.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        </motion.section>
 
         {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="bg-gradient-to-r from-pink-500 to-blue-500 rounded-2xl p-8 text-white"
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold">50+</div>
-              <div className="text-pink-100">Universities</div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold">500+</div>
-              <div className="text-pink-100">Restaurant Partners</div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold">1M+</div>
-              <div className="text-pink-100">Orders Delivered</div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold">100K+</div>
-              <div className="text-pink-100">Happy Students</div>
+          <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Campus Eats{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                By the Numbers
+              </span>
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-4xl md:text-5xl font-bold text-purple-600 mb-2">{stat.number}</div>
+                  <div className="text-gray-600">{stat.label}</div>
+                </motion.div>
+              ))}
             </div>
           </div>
-        </motion.div>
+        </motion.section>
+
+        {/* Team Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Meet Our{" "}
+            <span className="bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">Team</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {team.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+              >
+                <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-none">
+                  <CardContent className="p-6 text-center">
+                    <Image
+                      src={member.image || "/placeholder.svg"}
+                      alt={member.name}
+                      width={100}
+                      height={100}
+                      className="rounded-full mx-auto mb-4"
+                    />
+                    <h3 className="text-lg font-semibold mb-1">{member.name}</h3>
+                    <p className="text-purple-600 text-sm mb-3">{member.role}</p>
+                    <p className="text-gray-600 text-sm">{member.bio}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* CTA Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
+          <div className="bg-gradient-to-br from-purple-500 to-orange-500 rounded-3xl p-12 text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Join Our Mission</h2>
+            <p className="text-xl mb-8 text-purple-100 max-w-2xl mx-auto">
+              Whether you're a student looking for convenient food delivery or a restaurant wanting to reach campus
+              communities, we'd love to have you as part of the Campus Eats family.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="px-8 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                Download the App
+              </button>
+              <button className="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-colors">
+                Partner with Us
+              </button>
+            </div>
+          </div>
+        </motion.section>
       </div>
     </Layout>
   )

@@ -82,7 +82,7 @@ export function Cart() {
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-8 w-8"
+                            className="h-8 w-8 bg-transparent"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                           >
                             <MinusIcon className="h-4 w-4" />
@@ -91,7 +91,7 @@ export function Cart() {
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-8 w-8"
+                            className="h-8 w-8 bg-transparent"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                           >
                             <PlusIcon className="h-4 w-4" />
@@ -137,3 +137,5 @@ export function Cart() {
     </Sheet>
   )
 }
+
+export default Cart

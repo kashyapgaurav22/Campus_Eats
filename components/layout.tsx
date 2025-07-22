@@ -1,86 +1,270 @@
 "use client"
 
+import type React from "react"
+
+import { useState } from "react"
 import Link from "next/link"
-import { useState, useEffect, type ReactNode } from "react"
-import { MoonIcon, SunIcon, UserIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { motion, AnimatePresence } from "framer-motion"
-import { usePathname } from "next/navigation"
-import { TestModeIndicator } from "@/components/test-mode-indicator"
-import FooterLinks from "@/components/footer-links"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { MenuIcon, ShoppingCartIcon, UserIcon } from "lucide-react"
+import { useCart } from "@/context/cart-context"
+import Cart from "@/components/cart"
+import Image from "next/image"
 
-export default function Layout({ children }: { children: ReactNode }) {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const pathname = usePathname()
+interface LayoutProps {
+  children: React.ReactNode
+}
 
-  // Load dark mode preference from localStorage on initial render
-  useEffect(() => {
-    const savedDarkMode = localStorage.getItem("darkMode")
-    if (savedDarkMode !== null) {
-      const isDark = JSON.parse(savedDarkMode)
-      setIsDarkMode(isDark)
-      if (isDark) {
-        document.documentElement.classList.add("dark")
-      } else {
-        document.documentElement.classList.remove("dark")
-      }
+export default function Layout({ children }: LayoutProps) {
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { items } = useCart()
+
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
     }
-  }, [])
-
-  // Save dark mode preference to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(isDarkMode))
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [isDarkMode])
+    setIsMobileMenuOpen(false)
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md text-primary dark:text-white shadow-md sticky top-0 z-50">
-        <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="bg-gradient-to-r from-pink-500 to-blue-500 text-transparent bg-clip-text"
-            >
-              Campus Eats
-            </motion.span>
-          </Link>
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" onClick={() => setIsDarkMode(!isDarkMode)} className="dark:text-white">
-              {isDarkMode ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
-            </Button>
-            <Link href="/profile">
-              <Button variant="ghost" size="icon" className="dark:text-white">
-                <UserIcon className="h-5 w-5" />
-              </Button>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-3">
+              <Image
+                src="/images/campus-eats-logo.jpeg"
+                alt="Campus Eats Logo"
+                width={40}
+                height={40}
+                className="rounded-lg"
+              />
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                Campus Eats
+              </span>
             </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8">
+              <button
+                onClick={() => scrollToSection("how-it-works")}
+                className="text-gray-700 hover:text-purple-600 transition-colors"
+              >
+                How it Works
+              </button>
+              <button
+                onClick={() => scrollToSection("for-students")}
+                className="text-gray-700 hover:text-purple-600 transition-colors"
+              >
+                For Students
+              </button>
+              <button
+                onClick={() => scrollToSection("universities")}
+                className="text-gray-700 hover:text-purple-600 transition-colors"
+              >
+                Universities
+              </button>
+              <Link href="/about" className="text-gray-700 hover:text-purple-600 transition-colors">
+                About
+              </Link>
+              <Link href="/contact" className="text-gray-700 hover:text-purple-600 transition-colors">
+                Contact
+              </Link>
+            </nav>
+
+            {/* Right side buttons */}
+            <div className="flex items-center space-x-4">
+              {/* Cart Button */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsCartOpen(true)}
+                className="relative border-purple-200 hover:bg-purple-50"
+              >
+                <ShoppingCartIcon className="h-4 w-4" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-gradient-to-r from-purple-500 to-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </Button>
+
+              {/* Profile Button */}
+              <Link href="/profile">
+                <Button variant="outline" size="sm" className="border-purple-200 hover:bg-purple-50 bg-transparent">
+                  <UserIcon className="h-4 w-4" />
+                </Button>
+              </Link>
+
+              {/* Mobile menu button */}
+              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="md:hidden border-purple-200 hover:bg-purple-50 bg-transparent"
+                  >
+                    <MenuIcon className="h-4 w-4" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                  <nav className="flex flex-col space-y-4 mt-8">
+                    <button
+                      onClick={() => scrollToSection("how-it-works")}
+                      className="text-left text-gray-700 hover:text-purple-600 transition-colors py-2"
+                    >
+                      How it Works
+                    </button>
+                    <button
+                      onClick={() => scrollToSection("for-students")}
+                      className="text-left text-gray-700 hover:text-purple-600 transition-colors py-2"
+                    >
+                      For Students
+                    </button>
+                    <button
+                      onClick={() => scrollToSection("universities")}
+                      className="text-left text-gray-700 hover:text-purple-600 transition-colors py-2"
+                    >
+                      Universities
+                    </button>
+                    <Link
+                      href="/about"
+                      className="text-gray-700 hover:text-purple-600 transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      About
+                    </Link>
+                    <Link
+                      href="/contact"
+                      className="text-gray-700 hover:text-purple-600 transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Contact
+                    </Link>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
-        </nav>
+        </div>
       </header>
-      <AnimatePresence mode="wait">
-        <motion.main
-          key={pathname}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-          className="container mx-auto px-4 py-8"
-        >
-          {children}
-        </motion.main>
-      </AnimatePresence>
-      <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md text-primary dark:text-white mt-auto py-4">
-        <div className="container mx-auto px-4 text-center">
-          <FooterLinks />
+
+      {/* Main Content */}
+      <main>{children}</main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Company Info */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <Image
+                  src="/images/campus-eats-logo.jpeg"
+                  alt="Campus Eats Logo"
+                  width={32}
+                  height={32}
+                  className="rounded-lg"
+                />
+                <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text">
+                  Campus Eats
+                </span>
+              </div>
+              <p className="text-gray-600 text-sm">
+                The food delivery app designed specifically for university students.
+              </p>
+            </div>
+
+            {/* Students */}
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-4">Students</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <button
+                    onClick={() => scrollToSection("how-it-works")}
+                    className="text-gray-600 hover:text-purple-600 transition-colors"
+                  >
+                    How it Works
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("discounts")}
+                    className="text-gray-600 hover:text-purple-600 transition-colors"
+                  >
+                    Student Discounts
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("campus-locations")}
+                    className="text-gray-600 hover:text-purple-600 transition-colors"
+                  >
+                    Campus Locations
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-4">Company</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="/about" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/careers" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    Contact Us
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-4">Legal</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="/privacy" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    Terms & Conditions
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/refund-policy" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    Refund Policy
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-200 mt-8 pt-8 text-center">
+            <p className="text-gray-600 text-sm">© 2025 Campus Eats. All rights reserved. Made with ❤️ for students.</p>
+          </div>
         </div>
       </footer>
-      <TestModeIndicator />
+
+      {/* Cart Sidebar */}
+      <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   )
 }
