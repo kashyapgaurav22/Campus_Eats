@@ -6,9 +6,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { MenuIcon, ShoppingCartIcon, UserIcon } from "lucide-react"
-import { useCart } from "@/context/cart-context"
-import Cart from "@/components/cart"
+import { MenuIcon } from "lucide-react"
 import Image from "next/image"
 
 interface LayoutProps {
@@ -16,11 +14,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { items } = useCart()
-
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -80,28 +74,6 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Right side buttons */}
             <div className="flex items-center space-x-4">
-              {/* Cart Button */}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsCartOpen(true)}
-                className="relative border-purple-200 hover:bg-purple-50"
-              >
-                <ShoppingCartIcon className="h-4 w-4" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-gradient-to-r from-purple-500 to-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {totalItems}
-                  </span>
-                )}
-              </Button>
-
-              {/* Profile Button */}
-              <Link href="/profile">
-                <Button variant="outline" size="sm" className="border-purple-200 hover:bg-purple-50 bg-transparent">
-                  <UserIcon className="h-4 w-4" />
-                </Button>
-              </Link>
-
               {/* Mobile menu button */}
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
@@ -262,9 +234,6 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </div>
       </footer>
-
-      {/* Cart Sidebar */}
-      <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   )
 }

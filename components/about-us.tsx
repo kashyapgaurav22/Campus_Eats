@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   HeartIcon,
   UsersIcon,
@@ -17,33 +16,6 @@ import {
 } from "lucide-react"
 
 export default function AboutUs() {
-  const teamMembers = [
-    {
-      name: "Sarah Chen",
-      role: "CEO & Co-Founder",
-      image: "https://i.pravatar.cc/150?img=1",
-      bio: "Former Stanford student who experienced the campus food struggle firsthand. MBA from Wharton.",
-    },
-    {
-      name: "Marcus Johnson",
-      role: "CTO & Co-Founder",
-      image: "https://i.pravatar.cc/150?img=2",
-      bio: "Ex-Google engineer passionate about solving real-world problems through technology.",
-    },
-    {
-      name: "Emily Rodriguez",
-      role: "Head of Operations",
-      image: "https://i.pravatar.cc/150?img=3",
-      bio: "10+ years in logistics and supply chain management. Expert in campus delivery systems.",
-    },
-    {
-      name: "David Kim",
-      role: "Head of Partnerships",
-      image: "https://i.pravatar.cc/150?img=4",
-      bio: "Former restaurant industry executive with deep connections in campus dining.",
-    },
-  ]
-
   const milestones = [
     { year: "2020", event: "Campus Eats founded at UC Berkeley", icon: <GraduationCapIcon className="h-4 w-4" /> },
     { year: "2021", event: "Expanded to 10 universities", icon: <TrendingUpIcon className="h-4 w-4" /> },
@@ -57,12 +29,12 @@ export default function AboutUs() {
     {
       title: "Student-First",
       description: "Every decision we make prioritizes the student experience and affordability.",
-      icon: <GraduationCapIcon className="h-6 w-6 text-blue-500" />,
+      icon: <GraduationCapIcon className="h-6 w-6 text-purple-500" />,
     },
     {
       title: "Community",
       description: "Building connections between students, restaurants, and campus communities.",
-      icon: <UsersIcon className="h-6 w-6 text-green-500" />,
+      icon: <UsersIcon className="h-6 w-6 text-orange-500" />,
     },
     {
       title: "Reliability",
@@ -77,12 +49,12 @@ export default function AboutUs() {
     {
       title: "Sustainability",
       description: "Committed to environmentally responsible practices and reducing waste.",
-      icon: <LeafIcon className="h-6 w-6 text-emerald-500" />,
+      icon: <LeafIcon className="h-6 w-6 text-purple-500" />,
     },
     {
       title: "Accessibility",
       description: "Making quality food accessible to all students regardless of their circumstances.",
-      icon: <HeartIcon className="h-6 w-6 text-red-500" />,
+      icon: <HeartIcon className="h-6 w-6 text-orange-500" />,
     },
   ]
 
@@ -100,7 +72,7 @@ export default function AboutUs() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <HeartIcon className="h-6 w-6 text-red-500" />
+              <HeartIcon className="h-6 w-6 text-orange-500" />
               Our Story
             </CardTitle>
           </CardHeader>
@@ -128,12 +100,12 @@ export default function AboutUs() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <TrendingUpIcon className="h-6 w-6 text-blue-500" />
+              <TrendingUpIcon className="h-6 w-6 text-purple-500" />
               Our Mission
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 p-6 rounded-lg">
+            <div className="bg-gradient-to-r from-purple-50 to-orange-50 dark:from-purple-950 dark:to-orange-950 p-6 rounded-lg">
               <h3 className="text-2xl font-semibold mb-4 text-center">
                 To make quality food accessible, affordable, and convenient for every student
               </h3>
@@ -165,7 +137,7 @@ export default function AboutUs() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <ClockIcon className="h-6 w-6 text-green-500" />
+              <ClockIcon className="h-6 w-6 text-orange-500" />
               Our Journey
             </CardTitle>
           </CardHeader>
@@ -188,42 +160,11 @@ export default function AboutUs() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <UsersIcon className="h-6 w-6 text-purple-500" />
-              Meet Our Team
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {teamMembers.map((member, index) => (
-                <div key={index} className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                  <Avatar className="h-16 w-16">
-                    <AvatarImage src={member.image || "/placeholder.svg"} alt={member.name} />
-                    <AvatarFallback>
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="font-semibold">{member.name}</h3>
-                    <p className="text-sm text-primary mb-2">{member.role}</p>
-                    <p className="text-sm text-muted-foreground">{member.bio}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card>
             <CardHeader>
               <CardTitle className="text-center">
-                <div className="text-3xl font-bold text-blue-500 mb-2">100+</div>
+                <div className="text-3xl font-bold text-purple-500 mb-2">100+</div>
                 Universities
               </CardTitle>
             </CardHeader>
@@ -235,7 +176,7 @@ export default function AboutUs() {
           <Card>
             <CardHeader>
               <CardTitle className="text-center">
-                <div className="text-3xl font-bold text-green-500 mb-2">5M+</div>
+                <div className="text-3xl font-bold text-orange-500 mb-2">5M+</div>
                 Orders Delivered
               </CardTitle>
             </CardHeader>
@@ -262,7 +203,7 @@ export default function AboutUs() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <LeafIcon className="h-6 w-6 text-green-500" />
+              <LeafIcon className="h-6 w-6 text-orange-500" />
               Our Commitment to Sustainability
             </CardTitle>
           </CardHeader>
@@ -291,7 +232,7 @@ export default function AboutUs() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <StarIcon className="h-6 w-6 text-yellow-500" />
+              <StarIcon className="h-6 w-6 text-purple-500" />
               What Students Say
             </CardTitle>
           </CardHeader>
@@ -303,9 +244,9 @@ export default function AboutUs() {
                   student budget."
                 </p>
                 <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
+                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-medium text-purple-600">JD</span>
+                  </div>
                   <div>
                     <p className="font-medium text-sm">Jessica D.</p>
                     <p className="text-xs text-muted-foreground">UC Berkeley, Senior</p>
@@ -319,9 +260,9 @@ export default function AboutUs() {
                   always get my order right."
                 </p>
                 <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>MR</AvatarFallback>
-                  </Avatar>
+                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-medium text-orange-600">MR</span>
+                  </div>
                   <div>
                     <p className="font-medium text-sm">Mike R.</p>
                     <p className="text-xs text-muted-foreground">NYU, Sophomore</p>
@@ -367,7 +308,7 @@ export default function AboutUs() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold mb-2">General Inquiries</h3>
-                <p className="text-muted-foreground">hello@campuseats.com</p>
+                <p className="text-muted-foreground">support@campuseats.in</p>
                 <p className="text-muted-foreground">1-800-CAMPUS-EATS</p>
               </div>
               <div>
@@ -380,11 +321,11 @@ export default function AboutUs() {
               </div>
               <div>
                 <h3 className="font-semibold mb-2">Restaurant Partnerships</h3>
-                <p className="text-muted-foreground">partners@campuseats.com</p>
+                <p className="text-muted-foreground">partners@campuseats.in</p>
               </div>
               <div>
                 <h3 className="font-semibold mb-2">Careers</h3>
-                <p className="text-muted-foreground">careers@campuseats.com</p>
+                <p className="text-muted-foreground">careers@campuseats.in</p>
               </div>
             </div>
           </CardContent>
