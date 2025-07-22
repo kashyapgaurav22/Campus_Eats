@@ -27,12 +27,12 @@ export default function FooterLinks() {
               </Link>
             </li>
             <li>
-              <Link href="/support" className="hover:text-primary">
+              <Link href="/contact" className="hover:text-primary">
                 Contact&nbsp;Us
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-primary">
+              <Link href="/careers" className="hover:text-primary">
                 Careers
               </Link>
             </li>
@@ -73,13 +73,31 @@ export default function FooterLinks() {
             <Link href="#" aria-label="Facebook" className="hover:text-primary">
               <FacebookIcon className="h-5 w-5" />
             </Link>
-            <Link href="#" aria-label="Instagram" className="hover:text-primary">
+            <Link
+              href="https://www.instagram.com/campus_eats_official?igsh=MXN0anAyaTNuMDRoeQ=="
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="hover:text-primary"
+            >
               <InstagramIcon className="h-5 w-5" />
             </Link>
-            <Link href="#" aria-label="Twitter" className="hover:text-primary">
+            <Link
+              href="https://x.com/campus_eats"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="hover:text-primary"
+            >
               <TwitterIcon className="h-5 w-5" />
             </Link>
-            <Link href="#" aria-label="LinkedIn" className="hover:text-primary">
+            <Link
+              href="https://www.linkedin.com/company/campuseatsofficial/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-primary"
+            >
               <LinkedinIcon className="h-5 w-5" />
             </Link>
           </div>
