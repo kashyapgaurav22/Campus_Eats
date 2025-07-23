@@ -32,28 +32,16 @@ const values = [
 
 const team = [
   {
-    name: "Alex Chen",
-    role: "CEO & Co-Founder",
-    bio: "Former Stanford student who experienced the campus food delivery gap firsthand.",
+    name: "Alok SKJ",
+    role: "CEO & Founder",
+    bio: "Visionary leader driving Campus Eats' mission to revolutionize campus food delivery.",
     image: "https://i.pravatar.cc/150?img=5",
   },
   {
-    name: "Sarah Johnson",
-    role: "CTO & Co-Founder",
-    bio: "MIT graduate with expertise in logistics and mobile app development.",
+    name: "Gaurav Raj",
+    role: "Co-Founder",
+    bio: "Strategic co-founder focused on building sustainable growth and student-centric solutions.",
     image: "https://i.pravatar.cc/150?img=6",
-  },
-  {
-    name: "Marcus Rodriguez",
-    role: "Head of Operations",
-    bio: "Berkeley alum focused on scaling delivery operations across university campuses.",
-    image: "https://i.pravatar.cc/150?img=7",
-  },
-  {
-    name: "Emily Park",
-    role: "Head of Student Experience",
-    bio: "UCLA graduate dedicated to creating the best possible experience for student users.",
-    image: "https://i.pravatar.cc/150?img=8",
   },
 ]
 

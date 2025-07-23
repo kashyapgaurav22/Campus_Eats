@@ -291,7 +291,7 @@ export default function Home() {
                 description:
                   "Receive your fresh, hot meal delivered right to your dorm, library, or anywhere on campus.",
                 icon: <CheckCircleIcon className="h-8 w-8" />,
-                color: "bg-orange-500",
+                color: "bg-purple-500",
               },
             ].map((step, index) => (
               <motion.div

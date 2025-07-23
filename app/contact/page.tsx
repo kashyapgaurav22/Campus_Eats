@@ -16,14 +16,14 @@ const contactInfo = [
   {
     icon: <PhoneIcon className="h-6 w-6 text-orange-500" />,
     title: "Call Us",
-    details: "1-800-CAMPUS-EATS",
+    details: "7717650277",
     description: "Available 24/7 for urgent matters",
   },
   {
     icon: <MapPinIcon className="h-6 w-6 text-purple-500" />,
     title: "Visit Us",
-    details: "123 University Ave, Palo Alto, CA 94301",
-    description: "Our headquarters near Stanford",
+    details: "#710, sham nagar, punjab",
+    description: "Our office in Punjab",
   },
   {
     icon: <ClockIcon className="h-6 w-6 text-orange-500" />,
