@@ -1,24 +1,24 @@
-import type { ReactNode } from "react"
-import { CartProvider } from "@/context/cart-context"
-import "./globals.css"
-
+import type React from "react"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
+import { CartProvider } from "@/context/cart-context"
+import { Toaster } from "@/components/ui/toaster"
+import "./globals.css"
 
-/**
- * Root layout with self-hosted Geist fonts applied globally.
- * Both fonts are imported from `geist/font`, which uses the
- * built-in `next/font` optimization under the hood.
- */
-export default function RootLayout({ children }: { children: ReactNode }) {
+export const metadata = {
+  title: "Campus Eats - Food Delivery for Students",
+  description: "Fast, affordable food delivery designed specifically for university campuses.",
+    generator: 'v0.dev'
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html
-      lang="en"
-      /* Expose the font variables so they can be consumed by Tailwind or plain CSS. */
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
-    >
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
-        {/* Apply the default font family and expose CSS variables for easy reuse */}
         <style>{`
           html {
             font-family: ${GeistSans.style.fontFamily};
@@ -27,14 +27,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }
         `}</style>
       </head>
-
-      <body className="font-sans">
-        <CartProvider>{children}</CartProvider>
+      <body className={GeistSans.className}>
+        <CartProvider>
+          {children}
+          <Toaster />
+        </CartProvider>
       </body>
     </html>
   )
 }
-
-export const metadata = {
-      generator: 'v0.dev'
-    };

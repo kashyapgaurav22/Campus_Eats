@@ -35,13 +35,13 @@ const team = [
     name: "Alok SKJ",
     role: "CEO & Founder",
     bio: "Visionary leader driving Campus Eats' mission to revolutionize campus food delivery.",
-    image: "https://i.pravatar.cc/150?img=5",
+    image: "/images/alok.png.jpeg",
   },
   {
     name: "Gaurav Raj",
     role: "Co-Founder",
     bio: "Strategic co-founder focused on building sustainable growth and student-centric solutions.",
-    image: "https://i.pravatar.cc/150?img=6",
+    image: "/images/gaurav.jpeg",
   },
 ]
 
