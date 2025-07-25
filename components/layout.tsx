@@ -39,29 +39,20 @@ export default function Layout({ children }: LayoutProps) {
                 height={40}
                 className="rounded-lg"
               />
-              <span className="text-2xl font-bold text-purple-600">Campus Eats</span>
+              {/* <span className="text-2xl font-bold text-purple-600">Campus Eats</span> */}
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8 ">
               <button
                 onClick={() => scrollToSection("how-it-works")}
                 className="text-gray-700 hover:text-purple-600 transition-colors"
               >
                 How it Works
               </button>
-              <button
-                onClick={() => scrollToSection("for-students")}
-                className="text-gray-700 hover:text-purple-600 transition-colors"
-              >
-                For Students
-              </button>
-              <button
-                onClick={() => scrollToSection("universities")}
-                className="text-gray-700 hover:text-purple-600 transition-colors"
-              >
-                Universities
-              </button>
+              <Link href="/careers" className="text-gray-700 hover:text-purple-600 transition-colors">
+                Careers
+              </Link>
               <Link href="/about" className="text-gray-700 hover:text-purple-600 transition-colors">
                 About
               </Link>
@@ -71,7 +62,7 @@ export default function Layout({ children }: LayoutProps) {
             </nav>
 
             {/* Right side buttons */}
-            <div className="flex items-center space-x-4">
+            <div className="flex md:hidden items-center space-x-4">
               {/* Mobile menu button */}
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>

@@ -20,9 +20,12 @@ import {
   PercentIcon,
   TruckIcon,
   CheckCircleIcon,
+  PersonStanding,
+  User,
 } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
 
 const features = [
   {
@@ -124,7 +127,7 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 100,
     },
   },
@@ -151,29 +154,39 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="text-center py-24 px-4">
+      <section className="text-center py-24 px-4 relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <Badge className="mb-6 px-4 py-2 text-sm bg-purple-600 text-white">🎓 Made for Students, by Students</Badge>
+          <Badge className="mb-6 px-4 py-2 text-sm bg-purple-600 text-white">✨Revolutionizing Campus Dining</Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             <span className="text-purple-600">Campus Eats</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
-            The food delivery app designed specifically for university students. Get your favorite meals delivered fast,
-            affordable, and right to your campus location.
+           Order food from your favorite campus outlets in seconds. Fast delivery and pickup, easy payments, and zero waiting in line.
           </p>
 
-          <Button size="lg" className="px-8 py-6 text-lg bg-purple-600 hover:bg-purple-700">
+         <div className="flex items-center justify-center gap-4">
+          <a href="https://assets.campuseats.in/campus_eats.apk" download={"Campus-Eats.apk"}>
+             <Button size="lg" className="px-8 py-6 text-lg bg-purple-600 hover:bg-purple-700">
             <DownloadIcon className="mr-2 h-5 w-5" />
             Get the App
           </Button>
+          </a>
+         <Link href={"/contact"}>
+          <Button size="lg" className="px-8 py-6 text-lg text-black border border-purple-500 bg-transparent hover:text-white hover:bg-purple-700">
+            <User className="mr-2 h-5 w-5" />
+            Join Us
+          </Button></Link>
+         </div>
         </motion.div>
+ 
+       
       </section>
 
       {/* Animated Campus Eats Description */}
@@ -195,7 +208,7 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-4xl md:text-5xl font-bold mb-6"
                   >
-                    Campus Life, <span className="text-orange-200">Simplified</span>
+                    Hungry? <span className="text-orange-200">We've got you covered!</span>
                   </motion.h2>
                   <motion.p
                     initial={{ opacity: 0, x: -30 }}
@@ -203,9 +216,7 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="text-xl mb-8 text-purple-100"
                   >
-                    Campus Eats understands the unique challenges of student life. From late-night study sessions to
-                    scheduled pickups between classes, we're here to fuel your academic journey with delicious food
-                    delivered right where you need it.
+                    Discover nearby outlets, customize your meals, schedule pickups or delivery, and pay seamlessly—all from your phone. Whether you're between lectures or chilling in the hostel, great food is just a few taps away.
                   </motion.p>
                 </div>
 
@@ -319,7 +330,7 @@ export default function Home() {
       </section>
 
       {/* For Students Section */}
-      <section id="for-students" className="py-16 bg-white/50 backdrop-blur-sm">
+      {/* <section id="for-students" className="py-16 bg-white/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -350,10 +361,10 @@ export default function Home() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Universities Section */}
-      <section id="universities" className="py-20 px-4">
+      {/* <section id="universities" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -411,10 +422,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Student Discounts Section */}
-      <section id="discounts" className="py-20 bg-white/50 backdrop-blur-sm">
+      {/* <section id="discounts" className="py-20 bg-white/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -471,10 +482,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Campus Locations Section */}
-      <section id="campus-locations" className="py-20 px-4">
+      {/* <section id="campus-locations" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -532,7 +543,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Features Section */}
       <section className="py-20 bg-white/50 backdrop-blur-sm">
@@ -575,7 +586,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white/50 backdrop-blur-sm">
+      <section className="py-20 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

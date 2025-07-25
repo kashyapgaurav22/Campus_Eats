@@ -9,26 +9,30 @@ import { MailIcon, PhoneIcon, MapPinIcon, ClockIcon } from "lucide-react"
 const contactInfo = [
   {
     icon: <MailIcon className="h-6 w-6 text-purple-500" />,
+    background: "bg-purple-100",
     title: "Email Us",
     details: "support@campuseats.in",
     description: "Get in touch for general inquiries",
   },
   {
     icon: <PhoneIcon className="h-6 w-6 text-orange-500" />,
+    background: "bg-orange-100",
     title: "Call Us",
-    details: "7717650277",
+    details: "+91 77176-50277",
     description: "Available 24/7 for urgent matters",
   },
   {
     icon: <MapPinIcon className="h-6 w-6 text-purple-500" />,
+    background: "bg-purple-100",
     title: "Visit Us",
     details: "#710, sham nagar, punjab",
-    description: "Our office in Punjab",
+    description: "Our Headquarters",
   },
   {
     icon: <ClockIcon className="h-6 w-6 text-orange-500" />,
+    background: "bg-orange-100",
     title: "Business Hours",
-    details: "Mon-Fri: 9AM-6PM PST",
+    details: "Mon-Fri: 9AM-6PM",
     description: "Weekend support available online",
   },
 ]
@@ -36,7 +40,7 @@ const contactInfo = [
 export default function ContactPage() {
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-16">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -72,8 +76,8 @@ export default function ContactPage() {
                 transition={{ duration: 0.8, delay: index * 0.1 }}
               >
                 <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-none">
-                  <CardContent className="p-6 text-center">
-                    <div className="mb-4">{info.icon}</div>
+                  <CardContent className="p-6 text-center flex flex-col items-center">
+                    <div className={`mb-4 size-24 flex items-center justify-center rounded-full ${info.background}`}>{info.icon}</div>
                     <h3 className="text-lg font-semibold mb-2">{info.title}</h3>
                     <p className="text-purple-600 font-medium mb-1">{info.details}</p>
                     <p className="text-gray-600 text-sm">{info.description}</p>
