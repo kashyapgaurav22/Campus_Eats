@@ -50,9 +50,7 @@ export default function Layout({ children }: LayoutProps) {
               >
                 How it Works
               </button>
-              <Link href="/careers" className="text-gray-700 hover:text-purple-600 transition-colors">
-                Careers
-              </Link>
+             
               <Link href="/about" className="text-gray-700 hover:text-purple-600 transition-colors">
                 About
               </Link>
@@ -180,11 +178,7 @@ export default function Layout({ children }: LayoutProps) {
                     About Us
                   </Link>
                 </li>
-                <li>
-                  <Link href="/careers" className="text-gray-600 hover:text-purple-600 transition-colors">
-                    Careers
-                  </Link>
-                </li>
+             
                 <li>
                   <Link href="/contact" className="text-gray-600 hover:text-purple-600 transition-colors">
                     Contact Us
@@ -210,6 +204,11 @@ export default function Layout({ children }: LayoutProps) {
                 <li>
                   <Link href="/refund-policy" className="text-gray-600 hover:text-purple-600 transition-colors">
                     Refund Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/delivery-policy" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    Delivery Policy
                   </Link>
                 </li>
               </ul>

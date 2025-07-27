@@ -171,7 +171,7 @@ export default function Home() {
            Order food from your favorite campus outlets in seconds. Fast delivery and pickup, easy payments, and zero waiting in line.
           </p>
 
-         <div className="flex items-center justify-center gap-4">
+         <div className="flex flex-col md:flex-row items-center justify-center gap-4">
           <a href="https://assets.campuseats.in/campus_eats.apk" download={"Campus-Eats.apk"}>
              <Button size="lg" className="px-8 py-6 text-lg bg-purple-600 hover:bg-purple-700">
             <DownloadIcon className="mr-2 h-5 w-5" />

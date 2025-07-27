@@ -31,11 +31,7 @@ export default function FooterLinks() {
                 Contact&nbsp;Us
               </Link>
             </li>
-            <li>
-              <Link href="/careers" className="hover:text-primary">
-                Careers
-              </Link>
-            </li>
+           
             <li>
               <Link href="#" className="hover:text-primary">
                 Press
