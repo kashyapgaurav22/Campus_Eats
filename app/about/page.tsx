@@ -296,9 +296,11 @@ export default function AboutPage() {
               you as part of the Campus Eats family.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+             <a href="https://app.campuseats.in">
+               <button className="px-8 py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                 Download the App
               </button>
+             </a>
               <button className="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-colors">
                 Partner with Us
               </button>

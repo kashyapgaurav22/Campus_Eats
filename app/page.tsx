@@ -172,7 +172,7 @@ export default function Home() {
           </p>
 
          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-          <a href="https://assets.campuseats.in/campus_eats.apk" download={"Campus-Eats.apk"}>
+          <a href="https://app.campuseats.in">
              <Button size="lg" className="px-8 py-6 text-lg bg-purple-600 hover:bg-purple-700">
             <DownloadIcon className="mr-2 h-5 w-5" />
             Get the App
